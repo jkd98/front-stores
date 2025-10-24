@@ -1,0 +1,84 @@
+.cont {
+    height: 100dvh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media(min-width:768px) {
+    .cont {
+        flex-direction: row;
+    }
+}
+
+.welcome-text {
+    display: none;
+}
+
+.welcome-text p {
+    font-size: 2.5rem;
+    text-align: center;
+}
+
+.welcome-text h2 {
+    font-size: 3.5rem;
+    padding-block-end: 1.6rem;
+    text-align: center;
+}
+
+.welcome-text .form__campo-2 {
+    padding-block-start: 1.6rem;
+    width: 50%;
+}
+
+@media(min-width:768px) {
+    .welcome-text {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        border-top-right-radius: 5rem;
+        border-bottom-right-radius: 6rem;
+        width: 50%;
+
+        padding-inline: 1.6rem;
+        clip-path: polygon(0% 0%,
+                /* Esquina superior izquierda desplazada 10% */
+                100% 0%,
+                /* Esquina superior derecha normal */
+                95% 100%,
+                /* Esquina inferior derecha desplazada 5% */
+                0% 100%
+                /* Esquina inferior izquierda normal */
+            );
+
+        background-image: linear-gradient(to right, rgb(0 0 0 /.7), rgb(0 0 0 /.7)), url(/bg-login.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: left center;
+        height: 100dvh;
+    }
+}
+
+app-form-2-fa,
+app-form-login {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-inline: 1.6rem;
+
+}
+
+@media (min-width:768px) {
+
+    app-form-2-fa,
+    app-form-login {
+        width: 50%;
+
+    }
+}

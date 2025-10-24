@@ -1,0 +1,13 @@
+.nw-code {
+    padding-block-start: 3rem;
+}
+
+.nw-code button {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.nw-code button:hover {
+    background-color: transparent;
+    color: white;
+}

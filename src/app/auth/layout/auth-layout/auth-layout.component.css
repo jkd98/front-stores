@@ -1,0 +1,12 @@
+.bg{
+    background-image: linear-gradient(to right, rgb(0 0 0 /.7), rgb(0 0 0 /.7)), url(/bg-login.jpg);;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: left center;
+}
+
+@media(min-width:768px){
+    .bg{
+        background-image: none;
+    }
+}

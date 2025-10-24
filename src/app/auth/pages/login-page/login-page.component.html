@@ -1,0 +1,37 @@
+<main class="cont">
+    <div class="welcome-text">
+        <h2>Bienvenido</h2>
+        @if(authService.authStatus()==='2FA'){
+        <p>Ingresa el código que se ha enviado a tu correo</p>
+        }
+        @if(authService.authStatus()==='checking')
+        {
+        <p>Ingresa tus datos para usar las funcinalidades el sistema</p>
+        <div class="form__campo form__campo-2">
+            <button (click)="onRegister()" type="button">Registrase</button>
+        </div>
+        }
+
+        @if(authService.authStatus()==='register')
+        {
+        <p>¿Ya tienes una cuenta?</p>
+        <p>Ingresa tu correo y contraseña para usar el sistema</p>
+        <div class="form__campo form__campo-2">
+            <button (click)="onLogin()" type="button">Iniciar Sesión</button>
+        </div>
+        }
+    </div>
+
+
+    @if(authService.authStatus()==='checking' || authService.authStatus()==='not-authenticated') {
+    <app-form-login />
+    }
+
+    @if(authService.authStatus()==='2FA' || authService.authStatus()==='invalid-code'){
+    <app-form-2-fa />
+    }
+
+    @if(authService.authStatus()==='register'){
+        Form regsitro
+    }
+</main>

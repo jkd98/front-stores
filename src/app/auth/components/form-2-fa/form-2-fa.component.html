@@ -1,0 +1,22 @@
+<h2 class="form__heading">Autenticación en dos pasos</h2>
+<form class="form">
+    <!-- Email -->
+    <div class="form__campo">
+        <label for="code">Correo:</label>
+        <input type="number" name="code" id="code" placeholder="Ej. 123456" [formControl]="code">
+        <app-error-field [control]="code!" fieldName="código"></app-error-field>
+    </div>
+
+    <!-- Btn -->
+    <div class="form__campo">
+        <button type="button" (click)="onSubmit()">Iniciar Sesión</button>
+    </div>
+</form>
+
+@if(authService.authStatus()==='invalid-code'){
+
+<div class="form__campo nw-code">
+    <button (click)="generateNewCode2FA()">Generar Otro Código</button>
+</div>
+
+}

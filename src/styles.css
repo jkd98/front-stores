@@ -1,0 +1,128 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap');
+
+:root {
+    --primary: #0b021b;
+    --secondary: #9fc9f4;
+    --white: #faf9f9f5;
+    --blue: rgb(160, 147, 236);
+    --green-fnt: rgb(187, 223, 183);
+    --green: rgb(6, 141, 13);
+    --fuente-principal: 'Outfit', sans-serif;
+    --fuente-heading: "Google Sans Code", monospace;
+    color-scheme: light dark;
+}
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+    background-color: #FFF;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+    margin: 0;
+}
+
+body {
+    background: var(--primary);
+    font-size: 1.6rem;
+    min-height: 100dvh;
+    font-family: var(--fuente-principal);
+    color: var(--white);
+}
+
+
+/* [class*="cont"] {
+    max-width: 60rem;
+    margin: 0 auto;
+    width: 95%;
+} */
+
+img {
+    width: 100%;
+}
+
+/*Estilos form*/
+
+
+
+.form__heading {
+    font-size: 3.5rem;
+    text-align: center;
+    padding-bottom: 1.6rem;
+}
+
+.form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+
+@media (min-width:768px) {
+    .form {
+        width: 70%;
+    }
+}
+
+
+
+.form__campo {
+    width: 100%;
+    padding-inline: 1.6rem;
+    display: flex;
+    flex-direction: column;
+    gap: .8rem;
+}
+
+.form__campo label {
+    font-size: 1.5rem;
+}
+
+.form__campo input,
+button {
+    height: 4rem;
+    font-size: 1.6rem;
+    padding-inline: 1.6rem;
+    border-radius: .4rem;
+}
+
+.form__campo input {
+    border: none;
+    border-radius: 0px;
+    background-color: rgba(255, 255, 255, 0.091);
+}
+
+.form__campo input:focus-visible {
+    outline: none;
+    border-bottom: 1px solid white;
+}
+
+.form__campo button {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid var(--secondary);
+    font-weight: 700;
+    transition-property: background;
+    transition-duration: 350ms;
+    transition-timing-function: ease-in-out;
+}
+
+.form__campo button:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.form__campo-2 button {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+
+.form__campo-2 button:hover {
+    background-color: transparent;
+    color: var(--white);
+}
