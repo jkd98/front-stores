@@ -21,11 +21,31 @@ export class ErrorFieldComponent {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
-          return `El campo ${this.fieldName} es obligatorio`
+          return `El campo ${this.fieldName} es obligatorio`;
         case 'email':
-          return `El campo ${this.fieldName} debe tener un formato válido`
+          return `El campo ${this.fieldName} debe tener un formato válido`;
         case 'minlength':
-          return `El campo ${this.fieldName} debe tener ${errors['minlength']['requiredLength']} caracteres`
+          return `El campo ${this.fieldName} debe tener ${errors['minlength']['requiredLength']} caracteres`;
+        case 'maxlength':
+          return `El campo ${this.fieldName} solo puede tener ${errors['maxlength']['requiredLength']} caracteres`;
+        case 'pattern':
+          if (errors['pattern']['requiredPattern'] === "^[0-9]*$") {
+            return 'El campo solo acepta números'
+          }
+          if (errors['pattern']['requiredPattern'] === "^(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*()+={};:,.<>?~]).{8,}$") {
+            if (!/[A-Z]/.test(this.control.value)) {
+              return 'La contraseña debe tener al menos una letra mayúscula'
+            }
+            if (!/[-_!@#$%^&*()+={};:,.<>?~]/.test(this.control.value)) {
+              return 'La contraseña debe tener al menos un caracter especial'
+            }
+            if (!/[0-9]/.test(this.control.value)) {
+              return 'La contraseña debe tener al menos un número'
+            }
+          }
+          return null;
+        case 'noMatch':
+          return 'Las contraseñas no coinciden'
       }
     }
     return null

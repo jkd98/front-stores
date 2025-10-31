@@ -1,3 +1,14 @@
 <div class="bg">
-    <router-outlet />
+    <main class="cont">
+        <div class="welcome-text">
+            <h2>Bienvenido</h2>
+            <p>Ingresa tus datos para usar las funcinalidades del sistema</p>
+        </div>
+
+        <div class="wf">
+            <router-outlet />
+        </div>
+    </main>
+    
+    <app-custom-toast [message]="authService.response()?.msg!" [typeMessage]="authService.response()?.status!" [showToast]="authService.showMessage()"  />
 </div>

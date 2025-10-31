@@ -1,10 +1,12 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap, timeout } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 
-type TAuthStatus = 'checking' | 'authenticated' | 'not-authenticated' | '2FA' | 'invalid-code' | 'register';
+type TAuthStatus = 'checking' | 'authenticated' | 'not-authenticated' | '2FA' | 'invalid-code' | 'register' | 'forgot-pass' | 'new-pass';
+
 type TAuthSuccessData = {
   userId?: number;
   user?: {
@@ -15,10 +17,19 @@ type TAuthSuccessData = {
   }
   tkn?: string
 }
+
 type TAuthRespnse = {
   data: TAuthSuccessData | null;
   msg: string;
   status: string;
+}
+
+type TNwUser = {
+  name: string;
+  lastN: string;
+  pass: string;
+  email: string;
+  telf: string;
 }
 
 const baseUrl = environment.baseUrl;
@@ -31,21 +42,19 @@ export class AuthService {
   #user = signal<null | TAuthSuccessData['user']>(null);
   #userId = signal<number | null>(null);
   #token = signal<string | null>(null);
-  #responseMsg = signal<string | null>(null);
-
+  #response = signal<TAuthRespnse | null>(null);
+  #showMessage = signal<boolean>(false);
   #http = inject(HttpClient);
+  #router = inject(Router);
+  #timeoutId: ReturnType<typeof setTimeout> | null = null;
 
   authStatus = computed<TAuthStatus>(() => {
-    /* if (this.#authStatus() === 'checking') return 'checking';
-    if (this.#user()) return 'authenticated';
-    if (this.#authStatus() === '2FA') return '2FA';
-    return 'not-authenticated'; */
     return this.#authStatus();
   })
-
   user = computed(() => this.#user());
   token = computed<string | null>(() => this.#token());
-  responseMsg = computed<string | null>(() => this.#responseMsg());
+  response = computed<TAuthRespnse | null>(() => this.#response());
+  showMessage = computed<boolean>(() => this.#showMessage());
 
   /**
    * Función para iniciar sesión, comenzando con el 
@@ -58,45 +67,39 @@ export class AuthService {
     return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/login`, { email, pass })
       .pipe(
         tap((res) => {
-          const { data, msg } = res;
-          console.log(res);
-          this.#userId.set(data!.userId!);
-          this.#responseMsg.set(msg);
+          const { data } = res;
           this.#authStatus.set('2FA');
           this.#user.set({ email, pass })
+          this.showResponseByToast(res)
         }),
         map(() => true),
         catchError((error) => {
-          const { msg } = error.error;
-          console.log(error.error)
-          this.#responseMsg.set(msg);
-          this.#user.set(null);
-          this.#token.set(null);
           this.#authStatus.set('not-authenticated');
+          this.showResponseByToast(error.error);
           return of(false)
         })
       );
   }
 
   verify2FA(code: string): Observable<boolean> {
-    const formData = { code, userId: this.#userId() };
+    const formData = { code, userId: this.#response()?.data?.userId };
     return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/verify-2fa`, formData)
       .pipe(
         tap((res) => {
           const { data, msg } = res;
           console.log(res);
-          this.#userId.set(null);
-          this.#responseMsg.set(msg);
           this.#authStatus.set('authenticated');
-          this.#token.set(data?.tkn || null)
+          this.#token.set(data?.tkn!);
+          this.showResponseByToast(res);
         }),
         map(() => true),
         catchError((error) => {
           console.log(error.error)
-          const { msg } = error.error;
-          this.#responseMsg.set(msg);
-          this.#token.set(null);
           this.#authStatus.set('invalid-code');
+          this.showResponseByToast(error.error);
+          if (error.error.msg.includes('Demasiados intentos')) {
+            this.#router.navigate(['/auth/login'])
+          }
           return of(false)
         })
       );
@@ -108,28 +111,127 @@ export class AuthService {
         tap((res) => {
           const { data, msg } = res;
           console.log(res);
-          this.#userId.set(data?.userId || null);
-          this.#responseMsg.set(msg);
           this.#authStatus.set('2FA');
+          this.showResponseByToast(res);
         }),
         map(() => true),
         catchError((error) => {
           const { msg } = error.error;
           console.log(error.error)
-          this.#responseMsg.set(msg);
-          this.#user.set(null);
-          this.#token.set(null);
           this.#authStatus.set('not-authenticated');
+          this.showResponseByToast(error.error);
+          if (error.error.msg.includes('Demasiados intentos')) {
+            this.#router.navigate(['/auth/login'])
+          }
           return of(false)
         })
       );
   }
 
-  setStatusRegister() {
-    this.#authStatus.set('register');
+  registerUser(nwUser: TNwUser): Observable<boolean> {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/registro`, nwUser)
+      .pipe(
+        tap((res) => {
+          const { msg } = res;
+          console.log(res);
+          this.showResponseByToast(res);
+
+        }),
+        map(() => true),
+        catchError((error) => {
+          const { msg } = error.error;
+          console.log(error.error);
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
   }
 
-  setStatusChecking() {
-    this.#authStatus.set('checking');
+  confirmAccount(token: string) {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/confirmar-cuenta`, { token })
+      .pipe(
+        tap((res) => {
+          const { msg } = res;
+          this.#authStatus.set('checking');
+          console.log(res);
+          this.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          const { msg } = error.error;
+          console.log(error.error);
+          this.#authStatus.set('invalid-code');
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
   }
+
+  generateNewConfirmCode(email: string) {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/new-code-confirm`, { email })
+      .pipe(
+        tap((res) => {
+          const { msg } = res;
+          this.#authStatus.set('checking');
+          this.showResponseByToast(res);
+          console.log(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          const { msg } = error.error;
+          console.log(error.error);
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  requestNewPass(email: string) {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/tkn-reset`, { email })
+      .pipe(
+        tap((res) => {
+          const { msg } = res;
+          console.log(res);
+          this.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          const { msg } = error.error;
+          console.log(error.error);
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  newPass(pass: string, token: string) {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/new-pass`, { pass, token })
+      .pipe(
+        tap((res) => {
+          const { msg } = res;
+          this.showResponseByToast(res);
+          console.log(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          const { msg } = error.error;
+          console.log(error.error);
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  showResponseByToast({ msg, data, status }: TAuthRespnse) {
+    if (this.#timeoutId) {
+      clearTimeout(this.#timeoutId);
+      this.#timeoutId = null;
+    }
+    this.#response.set({ msg, data, status });
+    this.#showMessage.set(true);
+    this.#timeoutId = setTimeout(() => {
+      this.#showMessage.set(false);
+    }, 4000);
+  }
+
 }

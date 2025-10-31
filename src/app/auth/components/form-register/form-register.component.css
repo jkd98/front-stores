@@ -1,0 +1,11 @@
+@media (min-width:768px) {
+    .fullname {
+        width: 100%;
+        display: flex;
+    }
+
+    .fullname div {
+        width: 50%;
+    }
+}
+
