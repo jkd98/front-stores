@@ -1,0 +1,28 @@
+<nav class="bar-bg">
+    <div class="bar">
+        <div  class="logo-cont">
+            <p  routerLink="/product" class="logo">Inventory<span>Prods</span></p>
+        </div>
+        <div class="nav">
+            @for (link of links; track $index) {
+            <div class="nav__link">
+                <p [routerLink]="[link.link]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                    {{link.name}}
+                </p>
+            </div>
+            }
+        </div>
+        <div class="session">
+            <div class="nav__link">
+                <p (click)="onLogOut()">Cerrar Sesión</p>
+            </div>
+        </div>
+        <button type="button" class="burguer" (click)="onShowMenuModal()" >Burger</button>
+    </div>
+</nav>
+
+@if(showMenuModal()){
+    <div class="menu-modal">
+        menu modal
+    </div>
+}

@@ -1,0 +1,21 @@
+
+<h2>Produtcos</h2>
+<table class="table">
+    <thead class="table__head" >
+        <tr class="table__tr" >
+            <th class="th">Código</th>
+            <th class="th">Nombre</th>
+            <th class="th">Descripción</th>
+            <th class="th">Categoría</th>
+            <th class="th">Unidad</th>
+            <th class="th">Proveedor</th>
+        </tr>
+    </thead>
+    <tbody>
+        @for (product of productService.products(); track $index) {
+            <tr>
+                <td>{{product}}</td>
+            </tr>
+        }
+    </tbody>
+</table>

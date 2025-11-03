@@ -1,0 +1,21 @@
+h2 {
+    padding-top: 5rem;
+    text-align: center;
+}
+
+.table {
+    width: 100%;
+    border-radius: .5rem;
+    padding-top: 6rem;
+}
+
+.table__tr .th {
+    padding-block: 1rem;
+    border-block: 1px solid var(--white);
+    border-left: 1px solid var(--white);
+}
+
+.table__tr .th:last-of-type {
+    border-right: 1px solid var(--white);
+}
+

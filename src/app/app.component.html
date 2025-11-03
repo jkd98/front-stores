@@ -1,1 +1,3 @@
 <router-outlet />
+    <app-custom-toast [message]="authService.response()?.msg!" [typeMessage]="authService.response()?.status!"
+        [showToast]="authService.showMessage()" /> 

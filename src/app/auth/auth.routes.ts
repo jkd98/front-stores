@@ -1,16 +1,15 @@
 import { Routes } from "@angular/router";
-import { AuthLayoutComponent } from "./layout/auth-layout/auth-layout.component";
 import { isTwoFactorGuard } from "./guards/is-two-factor.guard";
 
 export const authRoutes: Routes = [
     {
         path: '',
-        component: AuthLayoutComponent,
+        loadComponent: ()=>import('./layout/auth-layout/auth-layout.component'),
         children: [
             {
                 path: 'login',
                 title: 'Iniciar Sesión',
-                loadComponent: () => import('./pages/login-page/login-page.component')
+                loadComponent: () => import('./pages/login-page/login-page.component'),
             },
             {
                 path: 'register',

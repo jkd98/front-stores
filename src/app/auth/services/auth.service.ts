@@ -40,10 +40,10 @@ const baseUrl = environment.baseUrl;
 export class AuthService {
   #authStatus = signal<TAuthStatus>('checking');
   #user = signal<null | TAuthSuccessData['user']>(null);
-  #userId = signal<number | null>(null);
   #token = signal<string | null>(null);
   #response = signal<TAuthRespnse | null>(null);
   #showMessage = signal<boolean>(false);
+
   #http = inject(HttpClient);
   #router = inject(Router);
   #timeoutId: ReturnType<typeof setTimeout> | null = null;
@@ -56,6 +56,10 @@ export class AuthService {
   response = computed<TAuthRespnse | null>(() => this.#response());
   showMessage = computed<boolean>(() => this.#showMessage());
 
+  constructor() {
+    this.#token.set(window.sessionStorage.getItem('_jwt'));
+    this.#user.set(JSON.parse(window.sessionStorage.getItem('_user') || 'null'));
+  }
   /**
    * Función para iniciar sesión, comenzando con el 
    * proceso de autenticación en dos pasos
@@ -74,6 +78,7 @@ export class AuthService {
         }),
         map(() => true),
         catchError((error) => {
+          console.log(error.error);
           this.#authStatus.set('not-authenticated');
           this.showResponseByToast(error.error);
           return of(false)
@@ -90,6 +95,9 @@ export class AuthService {
           console.log(res);
           this.#authStatus.set('authenticated');
           this.#token.set(data?.tkn!);
+          this.#user.set(data?.user);
+          window.sessionStorage.setItem('_jwt', this.#token()!);
+          window.sessionStorage.setItem('_user', JSON.stringify(this.#user()!));
           this.showResponseByToast(res);
         }),
         map(() => true),
@@ -222,7 +230,27 @@ export class AuthService {
       );
   }
 
-  showResponseByToast({ msg, data, status }: TAuthRespnse) {
+  logOut() {
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/logout`,{email:this.#user()?.email})
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          window.sessionStorage.removeItem('_jwt');
+          window.sessionStorage.removeItem('_user');
+          this.#user.set(null);
+          this.#token.set(null);
+          this.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          this.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  showResponseByToast({ msg, data, status }:any) {
     if (this.#timeoutId) {
       clearTimeout(this.#timeoutId);
       this.#timeoutId = null;

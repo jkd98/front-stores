@@ -26,7 +26,7 @@ export class Form2FAComponent {
     this.authService.verify2FA(this.code.value!).subscribe(res => {
       console.log(res);
       if(res){
-        this.#router.navigate(['/auth/login']);
+        this.#router.navigate(['/product/products'])
       }
       
     });

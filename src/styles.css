@@ -118,6 +118,11 @@ img {
     background-color: transparent;
     border: 1px solid var(--secondary);
     font-weight: 700;
+    padding-block: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
     transition-property: background;
     transition-duration: 350ms;
     transition-timing-function: ease-in-out;

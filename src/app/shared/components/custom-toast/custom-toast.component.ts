@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
   styleUrl: './custom-toast.component.css'
 })
 export class CustomToastComponent {
-  @Input() showToast:boolean = true
+  @Input() showToast:boolean = false
   @Input() typeMessage:string = 'info';
   @Input() message:string = 'mensaje'
 }
