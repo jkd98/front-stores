@@ -37,3 +37,40 @@ h2 {
 .tbody .tr:nth-child(even) {
     background-color: var(--blue);
 }
+
+.actions{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+@media (min-width:768px) {
+    .actions{
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .actions button{
+        width: 45%;
+    }
+}
+
+.actions button{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.actions button:hover{
+    transform: scale(1.2);
+}
+
+.delete {
+    color: var(--red);
+}
+
+.edit {
+    color: var(--green);
+}

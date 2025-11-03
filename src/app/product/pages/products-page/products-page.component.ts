@@ -12,4 +12,8 @@ export default class ProductsPageComponent implements OnInit{
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(r=>console.log(r));  
   }
+
+  onDelete(codigo:string){
+    this.productService.deleteProducts(codigo).subscribe(r=>console.log(r));
+  }
 }

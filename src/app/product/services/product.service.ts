@@ -13,16 +13,16 @@ export type TProductRespnse = {
 }
 
 type Product = {
-  id_producto:number;
+  id_producto: number;
   borrado: boolean;
-  categoria:string;
-  codigo:string;
-  descip:string;
-  id_proveedor:number;
-  nombre:string;
-  stock_actual:number;
-  stock_minimo:number;
-  unidad:string;
+  categoria: string;
+  codigo: string;
+  descip: string;
+  id_proveedor: number;
+  nombre: string;
+  stock_actual: number;
+  stock_minimo: number;
+  unidad: string;
 }
 
 @Injectable({
@@ -34,17 +34,34 @@ export class ProductService {
   #products = signal<Product[] | null>([]);
 
   products = computed(() => this.#products());
-
+  private headers = {
+    Authorization: `Bearer ${this.#authService.token()}`
+  };
   getAllProducts() {
-    const headers = {
-      Authorization: `Bearer ${this.#authService.token()}`
-    };
-    console.log({ headers });
-    return this.#http.get<TProductRespnse>(`${baseUrl}/product/list`, { headers })
+    return this.#http.get<TProductRespnse>(`${baseUrl}/product/list`, { headers: this.headers })
       .pipe(
         tap((res) => {
           console.log(res);
           this.#products.set(res.data);
+          this.#authService.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          this.#authService.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  deleteProducts(codigo: string) {
+    console.log(codigo);
+    return this.#http.post<TProductRespnse>(`${baseUrl}/product/delete`, { codigo }, { headers: this.headers })
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          const prodsFilter = this.#products()!.filter(p=>p.codigo!==codigo);
+          this.#products.set(prodsFilter);
           this.#authService.showResponseByToast(res);
         }),
         map(() => true),
