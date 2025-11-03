@@ -1,5 +1,5 @@
 
-<h2>Produtcos</h2>
+<h2>Productos</h2>
 <table class="table">
     <thead class="table__head" >
         <tr class="table__tr" >
@@ -11,10 +11,15 @@
             <th class="th">Proveedor</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody class="tbody" >
         @for (product of productService.products(); track $index) {
-            <tr>
-                <td>{{product}}</td>
+            <tr class="tr" [id]="$index">
+                <td>{{product.codigo}}</td>
+                <td>{{product.nombre}}</td>
+                <td>{{product.descip}}</td>
+                <td>{{product.categoria}}</td>
+                <td>{{product.unidad}}</td>
+                <td>{{product.id_proveedor}}</td>
             </tr>
         }
     </tbody>

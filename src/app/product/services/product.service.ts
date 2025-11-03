@@ -7,9 +7,22 @@ import { catchError, map, of, tap } from 'rxjs';
 const baseUrl = environment.baseUrl;
 
 export type TProductRespnse = {
-  data: [] | null;
+  data: Product[] | null;
   msg: string;
   status: string;
+}
+
+type Product = {
+  id_producto:number;
+  borrado: boolean;
+  categoria:string;
+  codigo:string;
+  descip:string;
+  id_proveedor:number;
+  nombre:string;
+  stock_actual:number;
+  stock_minimo:number;
+  unidad:string;
 }
 
 @Injectable({
@@ -18,7 +31,7 @@ export type TProductRespnse = {
 export class ProductService {
   #http = inject(HttpClient);
   #authService = inject(AuthService);
-  #products = signal<[] | null>([]);
+  #products = signal<Product[] | null>([]);
 
   products = computed(() => this.#products());
 
@@ -26,7 +39,8 @@ export class ProductService {
     const headers = {
       Authorization: `Bearer ${this.#authService.token()}`
     };
-    return this.#http.get<TProductRespnse>(`${baseUrl}/product/`,{headers})
+    console.log({ headers });
+    return this.#http.get<TProductRespnse>(`${baseUrl}/product/list`, { headers })
       .pipe(
         tap((res) => {
           console.log(res);
