@@ -12,17 +12,17 @@ export type TProductRespnse = {
   status: string;
 }
 
-type Product = {
-  id_producto: number;
-  borrado: boolean;
-  categoria: string;
-  codigo: string;
-  descip: string;
-  id_proveedor: number;
+export type Product = {
+  id_producto?: number;
+  borrado?: boolean;
+  codigo?: string;
   nombre: string;
-  stock_actual: number;
-  stock_minimo: number;
+  descrip: string;
+  stock_actual?: number;
+  categoria: string;
   unidad: string;
+  stock_minimo: number;
+  id_proveedor: number;
 }
 
 @Injectable({
@@ -43,6 +43,20 @@ export class ProductService {
         tap((res) => {
           console.log(res);
           this.#products.set(res.data);
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  registerNewProduct(product: Product) {
+    return this.#http.post<TProductRespnse>(`${baseUrl}/product/`, product, { headers: this.headers })
+      .pipe(
+        tap((res) => {
+          console.log(res);
           this.#authService.showResponseByToast(res);
         }),
         map(() => true),
@@ -60,7 +74,7 @@ export class ProductService {
       .pipe(
         tap((res) => {
           console.log(res);
-          const prodsFilter = this.#products()!.filter(p=>p.codigo!==codigo);
+          const prodsFilter = this.#products()!.filter(p => p.codigo !== codigo);
           this.#products.set(prodsFilter);
           this.#authService.showResponseByToast(res);
         }),

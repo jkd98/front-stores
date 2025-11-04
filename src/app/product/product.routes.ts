@@ -12,6 +12,11 @@ export const productRoutes:Routes = [
                 loadComponent: () => import('./pages/products-page/products-page.component')
             },
             {
+                path:'new-product',
+                title: 'Agregar Producto',
+                loadComponent: ()=> import('./pages/product-form-page/product-form-page.component')
+            },
+            {
                 path:'**',
                 redirectTo:'products',
                 pathMatch:'full'

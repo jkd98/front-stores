@@ -46,6 +46,10 @@ export class ErrorFieldComponent {
           return null;
         case 'noMatch':
           return 'Las contraseñas no coinciden'
+        case 'min':
+          return `El stock mínimo debe ser de ${errors['min']['min']}`
+        case 'max':
+          return `El stock mínimo debe ser de ${errors['max']['max']}`
       }
     }
     return null

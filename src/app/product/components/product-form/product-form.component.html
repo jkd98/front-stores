@@ -1,0 +1,56 @@
+<div class="form__capa">
+    <h2 class="form__heading">Registra un <span>Nuevo Producto</span></h2>
+    <form class="form" [formGroup]="newProductForm" (ngSubmit)="onSubmit()">
+        <div class="fullname">
+            <!-- Nombre -->
+            <div class="form__campo">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" placeholder="Nombre del producto" formControlName="nombre">
+                <app-error-field [control]="getFormControl('nombre')!" fieldName="nombre"></app-error-field>
+            </div>
+
+            <!-- Descrip -->
+            <div class="form__campo">
+                <label for="descrip">Descripción:</label>
+                <input type="text" name="descrip" id="descrip" placeholder="Descripción del producto" formControlName="descrip">
+                <app-error-field [control]="getFormControl('descrip')!" fieldName="descripción"></app-error-field>
+            </div>
+        </div>
+
+        <!-- Categoría -->
+        <div class="form__campo">
+            <label for="categoria">Categoría:</label>
+            <input type="email" name="categoria" id="categoria" formControlName="categoria">
+            <app-error-field [control]="getFormControl('categoria')!" fieldName="categoría"></app-error-field>
+        </div>
+
+        <!-- Unidad -->
+        <div class="form__campo">
+            <label for="unidad">Unidad de Medida:</label>
+            <input type="text" name="unidad" id="unidad" placeholder="Ej. Litro" formControlName="unidad">
+            <app-error-field [control]="getFormControl('unidad')!" fieldName="unidad"></app-error-field>
+        </div>
+
+        <!-- Stock minimo -->
+        <div class="form__campo">
+            <label for="stock_minimo">Stock Mínimo:</label>
+            <input type="text" name="stock_minimo" id="stock_minimo" placeholder="Ej. 10"
+                formControlName="stock_minimo">
+            <app-error-field [control]="getFormControl('stock_minimo')!" fieldName="stock mínimo"></app-error-field>
+        </div>
+
+        <!-- proveedor -->
+        <div class="form__campo">
+            <label for="telf">Proveedor:</label>
+            <input type="text" name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
+            <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="proveedor"></app-error-field>
+        </div>
+
+        <!-- Btn -->
+        <div class="form__campo">
+            <button type="submit">Crear Cuenta</button>
+        </div>
+
+        
+    </form>
+</div>
