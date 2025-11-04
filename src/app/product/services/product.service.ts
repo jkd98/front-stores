@@ -22,7 +22,7 @@ export type Product = {
   categoria: string;
   unidad: string;
   stock_minimo: number;
-  id_proveedor: number;
+  id_proveedor?: number;
 }
 
 @Injectable({
@@ -32,11 +32,15 @@ export class ProductService {
   #http = inject(HttpClient);
   #authService = inject(AuthService);
   #products = signal<Product[] | null>([]);
+  #product = signal<Product|null>(null);
 
   products = computed(() => this.#products());
+  product = computed(()=>this.#product());
+
   private headers = {
     Authorization: `Bearer ${this.#authService.token()}`
   };
+
   getAllProducts() {
     return this.#http.get<TProductRespnse>(`${baseUrl}/product/list`, { headers: this.headers })
       .pipe(
@@ -54,6 +58,40 @@ export class ProductService {
 
   registerNewProduct(product: Product) {
     return this.#http.post<TProductRespnse>(`${baseUrl}/product/`, product, { headers: this.headers })
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          this.#authService.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          this.#authService.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  getProductByCode(codigo: string) {
+    console.log(codigo);
+    return this.#http.get<{status:string,msg:string,data:Product}>(`${baseUrl}/product/${codigo}`, { headers: this.headers })
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          this.#product.set(res.data)
+          this.#authService.showResponseByToast(res);
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          this.#authService.showResponseByToast(error.error);
+          return of(false)
+        })
+      );
+  }
+
+  editProduct(product: Product) {
+    return this.#http.post<TProductRespnse>(`${baseUrl}/product/edit`, product, { headers: this.headers })
       .pipe(
         tap((res) => {
           console.log(res);

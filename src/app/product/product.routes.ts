@@ -17,6 +17,11 @@ export const productRoutes:Routes = [
                 loadComponent: ()=> import('./pages/product-form-page/product-form-page.component')
             },
             {
+                path:'edit/:code',
+                title: 'Editar Producto',
+                loadComponent: ()=> import('./pages/product-form-page/product-form-page.component')
+            },
+            {
                 path:'**',
                 redirectTo:'products',
                 pathMatch:'full'
