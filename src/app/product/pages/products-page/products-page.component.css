@@ -1,8 +1,15 @@
 .product-heading {
     padding-top: 4rem;
-    padding-bottom: 2rem;
+    padding-bottom: 4rem;
     display: grid;
     grid-template-columns: 3fr 1fr;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+}
+
+.product-heading .form__campo{
+    padding: 0;
 }
 
 .table {

@@ -29,7 +29,8 @@ html {
 }
 
 body {
-    background: var(--primary);
+    background: #433073;
+    background: linear-gradient(180deg, rgba(67, 48, 115, 1) 0%, rgba(11, 2, 27, 1) 100%);
     font-size: 1.6rem;
     min-height: 100dvh;
     font-family: var(--fuente-principal);
@@ -103,7 +104,7 @@ img {
     border-radius: .4rem;
 }
 
-.form__campo select option{
+.form__campo select option {
     color: var(--primary);
 }
 
@@ -159,7 +160,7 @@ ng-component {
     width: 100%;
 }
 
-a{
+a {
     text-decoration: none;
     color: var(--white);
     font-size: 1.2rem;
@@ -168,5 +169,3 @@ a{
 a span {
     font-weight: 800;
 }
-
-

@@ -1,5 +1,7 @@
 .bar-bg {
-    background-color: #5f657e;
+    background-color: #ffffff23;
+    padding-block: 3rem;
+
 }
 
 .bar {
@@ -9,7 +11,11 @@
     width: 120rem;
     max-width: 90%;
     margin: 0 auto;
-    padding-block: 3rem;
+    border: 1px solid #ffffff7c;
+    border-radius: 30rem;
+    padding-inline: 2.5rem;
+    padding-block: 2rem;
+
 }
 
 @media (min-width:768px) {
