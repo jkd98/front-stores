@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './auth-layout.component.html',
   styleUrl: './auth-layout.component.css'
 })
-export default class AuthLayoutComponent {
+export  class AuthLayoutComponent {
   ///
   authService = inject(AuthService);
 }

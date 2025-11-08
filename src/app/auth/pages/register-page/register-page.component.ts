@@ -6,6 +6,6 @@ import { FormRegisterComponent } from '../../components/form-register/form-regis
   templateUrl: './register-page.component.html',
   styleUrl: './register-page.component.css'
 })
-export default class RegisterPageComponent {
+export  class RegisterPageComponent {
 
 }

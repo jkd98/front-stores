@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.css'
 })
-export default class ProductsPageComponent implements OnInit{
+export  class ProductsPageComponent implements OnInit{
   productService = inject(ProductService);
   #router = inject(Router);
   

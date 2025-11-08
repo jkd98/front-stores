@@ -6,6 +6,6 @@ import { ConfirmAccountFormComponent } from '../../components/confirm-account-fo
   templateUrl: './confirm-account-page.component.html',
   styleUrl: './confirm-account-page.component.css'
 })
-export default class ConfirmAccountPageComponent {
+export  class ConfirmAccountPageComponent {
 
 }

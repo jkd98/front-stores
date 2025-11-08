@@ -7,7 +7,7 @@ import { RouterOutlet } from '@angular/router';
   templateUrl: './product-layout.component.html',
   styleUrl: './product-layout.component.css'
 })
-export default class ProductLayoutComponent {
+export  class ProductLayoutComponent {
   
   
 }

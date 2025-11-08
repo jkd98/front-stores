@@ -6,6 +6,6 @@ import { Form2FAComponent } from '../../components/form-2-fa/form-2-fa.component
   templateUrl: './page-two-fa.component.html',
   styleUrl: './page-two-fa.component.css'
 })
-export default class PageTwoFaComponent {
+export  class PageTwoFaComponent {
 
 }

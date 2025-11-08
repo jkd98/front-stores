@@ -6,6 +6,6 @@ import { ProductFormComponent } from '../../components/product-form/product-form
   templateUrl: './product-form-page.component.html',
   styleUrl: './product-form-page.component.css'
 })
-export default class ProductFormPageComponent {
+export  class ProductFormPageComponent {
 
 }

@@ -6,5 +6,5 @@ import { NewPassFormComponent } from '../../components/new-pass-form/new-pass-fo
   templateUrl: './new-pass-page.component.html',
   styleUrl: './new-pass-page.component.css'
 })
-export default class NewPassPageComponent {
+export  class NewPassPageComponent {
 }

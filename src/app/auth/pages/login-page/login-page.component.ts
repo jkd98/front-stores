@@ -6,6 +6,6 @@ import { FormLoginComponent } from '../../components/form-login/form-login.compo
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css'
 })
-export default class LoginPageComponent {
+export  class LoginPageComponent {
 
 }
