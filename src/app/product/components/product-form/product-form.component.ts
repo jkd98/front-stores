@@ -20,12 +20,28 @@ export class ProductFormComponent implements OnInit {
   newProductForm!: FormGroup;
   code: string = '';
 
+  unidad = [
+    'Litros',
+    'Metros',
+    'Piezas',
+    'Kilos'
+  ]
+
+  categories = [
+    'Alimentos',
+    'Bebidas',
+    'Utencilios',
+    'Limpieza',
+    'Electrodomesticos',
+    'Electrónica'
+  ]
+
   ngOnInit(): void {
     this.newProductForm = this.#fb.group({
       nombre: ['Producto', [Validators.required]],
       descrip: ['Este es un nuevo producto', [Validators.required]],
-      categoria: ['Alimentos', [Validators.required]],
-      unidad: ['Litros', [Validators.required]],
+      categoria: ['', [Validators.required]],
+      unidad: ['', [Validators.required]],
       stock_minimo: ['', [Validators.required, Validators.min(10), Validators.max(1000)]],
       id_proveedor: ['2', [Validators.required]],
     });

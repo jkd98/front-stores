@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './auth/services/auth.service';
 import { CustomToastComponent } from './shared/components/custom-toast/custom-toast.component';
@@ -10,5 +10,13 @@ import { CustomToastComponent } from './shared/components/custom-toast/custom-to
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  authService = inject(AuthService)
+  authService = inject(AuthService);
+  @HostListener('window:beforeunload', ['$event'])
+  async beforeUnloadHandler(event:Event){
+    if(this.authService.token()){
+      console.error('Componente destruido');
+      this.authService.sendLogoutBeacon()
+    }
+  }
+
 }

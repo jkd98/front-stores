@@ -22,41 +22,55 @@
             </div>
         </div>
 
-        <!-- Categoría -->
-        <div class="form__campo">
-            <label for="categoria">Categoría:</label>
-            <input type="email" name="categoria" id="categoria" formControlName="categoria">
-            <app-error-field [control]="getFormControl('categoria')!" fieldName="categoría"></app-error-field>
-        </div>
-
-        <!-- Unidad -->
-        <div class="form__campo">
-            <label for="unidad">Unidad de Medida:</label>
-            <input type="text" name="unidad" id="unidad" placeholder="Ej. Litro" formControlName="unidad">
-            <app-error-field [control]="getFormControl('unidad')!" fieldName="unidad"></app-error-field>
+        <div class="selects">
+            <!-- Categoría -->
+            <div class="form__campo">
+                <label for="categoria">Categoría:</label>
+                <select name="categoria" id="categoria" formControlName="categoria">
+                    <option selection value="" [defaultSelected]="true">--Seleccionar Categoría--</option>
+                    @for (item of categories; track $index) {
+                    <option selection [value]="item">{{item}}</option>
+                    }
+                </select>
+                <app-error-field [control]="getFormControl('categoria')!" fieldName="categoría"></app-error-field>
+            </div>
+    
+            <!-- Unidad -->
+            <div class="form__campo">
+                <label for="unidad">Unidad de Medida:</label>
+                <select name="unidad" id="unidad" formControlName="unidad">
+                    <option selection value="" [defaultSelected]="true">--Seleccionar Unidad--</option>
+                    @for (item of unidad; track $index) {
+                    <option selection [value]="item">{{item}}</option>
+                    }
+                </select>
+                <app-error-field [control]="getFormControl('unidad')!" fieldName="unidad"></app-error-field>
+            </div>
         </div>
 
         <!-- Stock minimo -->
-        <div class="form__campo">
-            <label for="stock_minimo">Stock Mínimo:</label>
-            <input type="text" name="stock_minimo" id="stock_minimo" placeholder="Ej. 10"
-                formControlName="stock_minimo">
-            <app-error-field [control]="getFormControl('stock_minimo')!" fieldName="stock mínimo"></app-error-field>
-        </div>
-
-        @if(!code){
-        <!-- proveedor -->
-        <div class="form__campo">
-            <label for="telf">Proveedor:</label>
-            <input type="text" name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
-            <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="proveedor"></app-error-field>
-        </div>
-        }
+         <div class="selects">
+             <div class="form__campo">
+                 <label for="stock_minimo">Stock Mínimo:</label>
+                 <input type="text" name="stock_minimo" id="stock_minimo" placeholder="Ej. 10"
+                     formControlName="stock_minimo">
+                 <app-error-field [control]="getFormControl('stock_minimo')!" fieldName="stock mínimo"></app-error-field>
+             </div>
+     
+             @if(!code){
+             <!-- proveedor -->
+             <div class="form__campo">
+                 <label for="telf">Proveedor:</label>
+                 <input type="text" name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
+                 <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="proveedor"></app-error-field>
+             </div>
+             }
+         </div>
 
         @if(code){
         <!-- Btn -->
         <div class="form__campo">
-            <button type="button" (click)="onEdit()" >Guardar</button>
+            <button type="button" (click)="onEdit()">Guardar</button>
         </div>
         }@else {
         <!-- Btn -->

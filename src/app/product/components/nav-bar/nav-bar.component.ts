@@ -15,7 +15,6 @@ export class NavBarComponent {
 
   links = [
     { name: 'Productos', link: '/product/products' },
-    { name: 'Agregar Productos', link: '/product/productss' },
   ]
   onLogOut() {
     this.#authServide.logOut().subscribe(res=>{

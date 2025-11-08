@@ -231,7 +231,7 @@ export class AuthService {
   }
 
   logOut() {
-    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/logout`,{email:this.#user()?.email})
+    return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/logout`, { email: this.#user()?.email })
       .pipe(
         tap((res) => {
           console.log(res);
@@ -250,7 +250,36 @@ export class AuthService {
       );
   }
 
-  showResponseByToast({ msg, data, status }:any) {
+  // sendBeacon al detectar el cierre de pestaña
+  sendLogoutBeacon(): void {
+    //Toma estos datos, envíalos, y hazlo tú mismo sin esperarme. No me importa la respuesta.
+
+    // 1. URL completa de endpoint de logout
+    const logoutUrl = `${baseUrl}/auth/logout`;
+
+    // 2. Cuerpo de la petición (JSON)
+    const data = new Blob([JSON.stringify({ email: this.#user()?.email })], {
+      type: 'application/json; charset=UTF-8'
+    });
+
+    // 3. sendBeacon
+    /*
+      Este metodo senBeacon le quita el trabajo a código JavaScript (que está a punto de morir) 
+      y se lo delega al navegador, el cual tiene un mecanismo especial 
+      para completar este tipo de "mensajes de emergencia".
+    */
+    // sendBeacon devuelve 'true' si el navegador pudo encolar la petición.
+    const sent = window.navigator.sendBeacon(logoutUrl, data);
+
+    if (sent) {
+      console.log('Logout beacon encolado exitosamente.');
+    } else {
+      console.error('Fallo al encolar el logout beacon.');
+    }
+  }
+
+
+  showResponseByToast({ msg, data, status }: any) {
     if (this.#timeoutId) {
       clearTimeout(this.#timeoutId);
       this.#timeoutId = null;

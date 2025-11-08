@@ -19,7 +19,11 @@ export default class ProductsPageComponent implements OnInit{
     this.productService.deleteProducts(codigo).subscribe(r=>console.log(r));
   }
 
-  onRedirect(url:string,code?:string){
+  onEdit(url:string,code?:string){
     this.#router.navigate([url,code])
+  }
+
+  onRedirect(url:string){
+    this.#router.navigate([url])
   }
 }
