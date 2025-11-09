@@ -39,12 +39,13 @@
 }
 
 .welcome-text h2 {
-    font-size: 8rem;
+    font-size: 5rem;
     padding-block-end: 1.6rem;
     text-align: center;
     font-weight: bold;
     word-break: break-word;
 }
+
 
 
 @media(min-width:768px) {
@@ -55,11 +56,11 @@
         align-items: flex-start;
         justify-content: center;
         padding-left: 5%;
-        padding-right: 30%;
+        padding-right: 20%;
         clip-path: polygon(0% 0%,
                 100% 0%,
                 /* Esquina superior derecha normal */
-                30% 100%,
+                70% 100%,
                 /* Esquina inferior derecha desplazada 5% */
                 0% 100%
                 /* Esquina inferior izquierda normal */

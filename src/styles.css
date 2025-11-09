@@ -2,8 +2,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Outfit:wght@100..900&display=swap');
 
 :root {
-    --primary: #0b021b;
-    --secondary: #9fc9f4;
+    --primary: #0b011d;
+    --secondary: #ded3f5;
+    --bg-altern: #ffffff8e;
+    --bg-altern2: #ffffff56;
     --white: #faf9f9f5;
     --blue: rgba(171, 171, 228, 0.596);
     --green-bg: rgb(187, 223, 183);
@@ -29,14 +31,24 @@ html {
 }
 
 body {
-    background: #433073;
-    background: linear-gradient(180deg, rgba(67, 48, 115, 1) 0%, rgba(11, 2, 27, 1) 100%);
     font-size: 1.6rem;
     min-height: 100dvh;
     font-family: var(--fuente-principal);
     color: var(--white);
 }
 
+/* 
+.bg1 {
+    background: 
+        linear-gradient(188deg, rgb(14, 195, 231) 0%, rgba(9, 9, 121, 1) 35%, rgba(2, 0, 36, 1) 100%),
+        linear-gradient(171deg, rgba(255, 0, 0, 1) 0%, rgba(121, 9, 9, 1) 35%, rgba(36, 0, 0, 1) 100%);
+    background-blend-mode: screen;
+}
+ */
+
+.bg1 {
+    background-color: var(--secondary);
+}
 
 /* [class*="cont"] {
     max-width: 60rem;
@@ -46,6 +58,11 @@ body {
 
 img {
     width: 100%;
+}
+
+h2 {
+    font-size: 5rem;
+    word-break: break-all;
 }
 
 /*Estilos form*/
@@ -73,6 +90,13 @@ img {
     text-align: center;
     padding-bottom: 5rem;
     width: 100%;
+    color: var(--secondary);
+}
+
+@media (min-width:768px) {
+    .form__heading {
+        color: var(--primary);
+    }
 }
 
 .form {
@@ -87,6 +111,14 @@ img {
     display: flex;
     flex-direction: column;
     padding-bottom: 2.4rem;
+    color: var(--secondary);
+
+}
+
+@media(min-width:768px) {
+    .form__campo {
+        color: var(--primary);
+    }
 }
 
 .form__campo label {
@@ -102,6 +134,18 @@ img {
     font-size: 1.6rem;
     padding-inline: 1.6rem;
     border-radius: .4rem;
+    color: var(--secondary);
+
+}
+
+@media(min-width:768px) {
+
+    .form__campo input,
+    .form__campo button,
+    .form__campo select {
+        color: var(--primary);
+
+    }
 }
 
 .form__campo select option {
@@ -113,11 +157,20 @@ img {
     border: none;
     border-radius: 0px;
     background-color: rgba(255, 255, 255, 0.091);
+    border-bottom: 1px solid var(--secondary);
+}
+
+@media(min-width:768px) {
+
+    .form__campo input,
+    .form__campo select {
+        border-bottom: 1px solid var(--primary);
+
+    }
 }
 
 .form__campo input:focus-visible {
     outline: none;
-    border-bottom: 1px solid white;
 }
 
 .form__campo button {
@@ -140,6 +193,20 @@ img {
     color: var(--primary);
 }
 
+
+
+@media(min-width:768px) {
+    .form__campo button {
+        border: 1px solid var(--primary);
+    }
+
+    .form__campo button:hover {
+        background-color: var(--primary);
+        color: var(--secondary);
+    }
+}
+
+
 .form__campo-2 button {
     background-color: var(--secondary);
     color: var(--primary);
@@ -147,7 +214,19 @@ img {
 
 .form__campo-2 button:hover {
     background-color: transparent;
-    color: var(--white);
+    color: var(--secondary);
+}
+
+@media(min-width:768px) {
+    .form__campo-2 button {
+        background-color: var(--primary);
+        color: var(--secondary);
+    }
+
+    .form__campo-2 button:hover {
+        background-color: var(--secondary);
+        color: var(--primary);
+    }
 }
 
 @media (min-width:768px) {
@@ -162,8 +241,14 @@ ng-component {
 
 a {
     text-decoration: none;
-    color: var(--white);
+    color: var(--secondary);
     font-size: 1.2rem;
+}
+
+@media(min-width:768px) {
+    a {
+        color: var(--primary);
+    }
 }
 
 a span {

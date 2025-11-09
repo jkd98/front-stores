@@ -23,6 +23,7 @@ export type Product = {
   unidad: string;
   stock_minimo: number;
   id_proveedor?: number;
+  showMenu?: boolean
 }
 
 @Injectable({
@@ -32,10 +33,10 @@ export class ProductService {
   #http = inject(HttpClient);
   #authService = inject(AuthService);
   #products = signal<Product[] | null>([]);
-  #product = signal<Product|null>(null);
+  #product = signal<Product | null>(null);
 
   products = computed(() => this.#products());
-  product = computed(()=>this.#product());
+  product = computed(() => this.#product());
 
   private headers = {
     Authorization: `Bearer ${this.#authService.token()}`
@@ -74,7 +75,7 @@ export class ProductService {
 
   getProductByCode(codigo: string) {
     console.log(codigo);
-    return this.#http.get<{status:string,msg:string,data:Product}>(`${baseUrl}/product/${codigo}`, { headers: this.headers })
+    return this.#http.get<{ status: string, msg: string, data: Product }>(`${baseUrl}/product/${codigo}`, { headers: this.headers })
       .pipe(
         tap((res) => {
           console.log(res);
@@ -123,5 +124,14 @@ export class ProductService {
           return of(false)
         })
       );
+  }
+
+  onShowMenu(product: Product) {
+    this.products()!.forEach(p => {
+      if(p!==product){
+        p.showMenu = false
+      }
+    });
+    product.showMenu = !product.showMenu;
   }
 }

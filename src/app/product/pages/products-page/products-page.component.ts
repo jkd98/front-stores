@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ProductService } from '../../services/product.service';
+import { Product, ProductService } from '../../services/product.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,23 +7,36 @@ import { Router } from '@angular/router';
   templateUrl: './products-page.component.html',
   styleUrl: './products-page.component.css'
 })
-export  class ProductsPageComponent implements OnInit{
+export class ProductsPageComponent implements OnInit {
   productService = inject(ProductService);
   #router = inject(Router);
-  
+  showMenu = false
+
+  tableHeadings = [
+    'Código',
+    'Nombre',
+    'Descripción',
+    'Categoría',
+    'Unidad',
+    'Proveedor',
+    'Acciones'
+  ]
+
   ngOnInit(): void {
-    this.productService.getAllProducts().subscribe(r=>console.log(r));  
+    this.productService.getAllProducts().subscribe(r => console.log(r));
   }
 
-  onDelete(codigo:string){
-    this.productService.deleteProducts(codigo).subscribe(r=>console.log(r));
+  onDelete(codigo: string) {
+    this.productService.deleteProducts(codigo).subscribe(r => console.log(r));
   }
 
-  onEdit(url:string,code?:string){
-    this.#router.navigate([url,code])
+  onEdit(url: string, code?: string) {
+    this.#router.navigate([url, code])
   }
 
-  onRedirect(url:string){
+  onRedirect(url: string) {
     this.#router.navigate([url])
   }
+
+
 }

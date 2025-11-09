@@ -5,6 +5,8 @@
 .form__capa {
     width: 90%;
     margin: 0 auto;
+    border-radius: 1rem;
+    background-color: var(--bg-altern2);
 }
 
 @media(min-width:768px) {

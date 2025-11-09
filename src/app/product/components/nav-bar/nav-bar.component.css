@@ -1,20 +1,20 @@
 .bar-bg {
-    background-color: #ffffff23;
-    padding-block: 3rem;
-
+    /* background-color: #ffffff23; */
+    color: var(--secondary);
+    background-color: var(--primary);
+    padding-block: 2rem;
 }
 
 .bar {
     display: grid;
     grid-template-columns: 3fr 1fr;
     justify-content: space-between;
-    width: 120rem;
+    margin: 0 auto;
+    border-radius: 1rem;
+    padding-inline: 3rem;
+    width: 90rem;
     max-width: 90%;
     margin: 0 auto;
-    border: 1px solid #ffffff7c;
-    border-radius: 30rem;
-    padding-inline: 2.5rem;
-    padding-block: 2rem;
 
 }
 
@@ -51,18 +51,22 @@
     }
 }
 
-.nav__link {
+.nav__link p {
     border: none;
-
+    padding: 1.5rem 3rem;
+    border-radius: 3rem;
+    font-weight: 700;
 }
 
-.nav__link:hover {
-    border-bottom: 1px solid var(--white);
+.nav__link p:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
     cursor: pointer;
 }
 
 .active {
-    border-bottom: 1px solid var(--white);
+    background-color: var(--secondary);
+    color: var(--primary);
 }
 
 @media (min-width:768px) {
@@ -70,5 +74,3 @@
         display: none;
     }
 }
-
-
