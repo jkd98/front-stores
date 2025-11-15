@@ -18,6 +18,7 @@
 .custom-toast p,
 .custom-toast h3 {
     color: var(--primary);
+    word-break: break-all;
 }
 
 

@@ -10,6 +10,7 @@ type TAuthStatus = 'checking' | 'authenticated' | 'not-authenticated' | '2FA' | 
 type TAuthSuccessData = {
   userId?: number;
   user?: {
+    userId?: number;
     name?: string;
     email: string;
     pass?: string;
@@ -43,6 +44,7 @@ export class AuthService {
   #token = signal<string | null>(null);
   #response = signal<TAuthRespnse | null>(null);
   #showMessage = signal<boolean>(false);
+  #userId = signal<Number>(0);
 
   #http = inject(HttpClient);
   #router = inject(Router);
@@ -73,7 +75,7 @@ export class AuthService {
         tap((res) => {
           const { data } = res;
           this.#authStatus.set('2FA');
-          this.#user.set({ email, pass })
+          this.#userId.set(Number(data?.userId!));
           this.showResponseByToast(res)
         }),
         map(() => true),
@@ -87,7 +89,8 @@ export class AuthService {
   }
 
   verify2FA(code: string): Observable<boolean> {
-    const formData = { code, userId: this.#response()?.data?.userId };
+    const formData = { code, userId: this.#userId() };
+    console.log(formData)
     return this.#http.post<TAuthRespnse>(`${baseUrl}/auth/verify-2fa`, formData)
       .pipe(
         tap((res) => {
@@ -102,6 +105,8 @@ export class AuthService {
         }),
         map(() => true),
         catchError((error) => {
+
+          console.log(formData)
           console.log(error.error)
           this.#authStatus.set('invalid-code');
           this.showResponseByToast(error.error);
