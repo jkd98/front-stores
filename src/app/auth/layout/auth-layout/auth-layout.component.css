@@ -25,7 +25,6 @@
 @media(min-width:768px) {
     .cont {
         flex-direction: row;
-        align-items: stretch;
     }
 }
 
@@ -50,8 +49,8 @@
 
 @media(min-width:768px) {
     .welcome-text {
-        width: 60%;
         display: flex;
+        width: 60%;
         flex-direction: column;
         align-items: flex-start;
         justify-content: center;

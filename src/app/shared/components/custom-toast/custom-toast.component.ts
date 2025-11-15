@@ -1,5 +1,6 @@
 import { NgClass } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { CustomToastService } from '../../services/custom-toast.service';
 
 @Component({
   selector: 'app-custom-toast',
@@ -8,7 +9,6 @@ import { Component, Input } from '@angular/core';
   styleUrl: './custom-toast.component.css'
 })
 export class CustomToastComponent {
-  @Input() showToast:boolean = false
-  @Input() typeMessage:string = 'info';
-  @Input() message:string = 'mensaje'
+  customToastService = inject(CustomToastService);
+
 }

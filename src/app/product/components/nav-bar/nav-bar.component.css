@@ -9,6 +9,7 @@
     display: grid;
     grid-template-columns: 3fr 1fr;
     justify-content: space-between;
+    align-items: center;
     margin: 0 auto;
     border-radius: 1rem;
     padding-inline: 3rem;
@@ -16,6 +17,16 @@
     max-width: 90%;
     margin: 0 auto;
 
+}
+
+@media (width<280px) {
+    .bar{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap:1rem;
+    }
 }
 
 @media (min-width:768px) {
@@ -56,6 +67,7 @@
     padding: 1.5rem 3rem;
     border-radius: 3rem;
     font-weight: 700;
+    text-align: center;
 }
 
 .nav__link p:hover {
@@ -69,8 +81,42 @@
     color: var(--primary);
 }
 
+.burguer{
+    background-color: transparent;
+    border: none;
+}
+
+.burguer svg{
+    width: 3rem;
+}
+
+
 @media (min-width:768px) {
     .burguer {
         display: none;
     }
+}
+
+.mobile-nav {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary);
+}
+
+@media (min-width:768px) {
+    .mobile-nav {
+        display: none;
+    }
+}
+
+.mobile-nav .nav__link {
+    width: 100%;
+}
+
+.mobile-nav .nav__link p {
+    border-radius: 0px;
+    width: 100%;
 }

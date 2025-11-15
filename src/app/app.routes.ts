@@ -14,6 +14,21 @@ export const routes: Routes = [
         canActivate: [isAuthGuard],
     },
     {
+        path: 'supplier',
+        loadChildren: () => import('./supplier/supplier.routes'),
+        canActivate: [isAuthGuard],
+    },
+    {
+        path: 'client',
+        loadChildren: () => import('./client/client.routes'),
+        canActivate: [isAuthGuard],
+    },
+    {
+        path: 'movement',
+        loadChildren: () => import('./movement/movement.routes'),
+        canActivate: [isAuthGuard],
+    },
+    {
         path: '**',
         redirectTo: '/product',
         pathMatch: 'full'

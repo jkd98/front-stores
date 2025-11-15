@@ -3,6 +3,7 @@ import { catchError, map, Observable, of, tap, timeout } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { CustomToastService } from '../../shared/services/custom-toast.service';
 
 
 type TAuthStatus = 'checking' | 'authenticated' | 'not-authenticated' | '2FA' | 'invalid-code' | 'register' | 'forgot-pass' | 'new-pass';
@@ -10,7 +11,6 @@ type TAuthStatus = 'checking' | 'authenticated' | 'not-authenticated' | '2FA' | 
 type TAuthSuccessData = {
   userId?: number;
   user?: {
-    userId?: number;
     name?: string;
     email: string;
     pass?: string;
@@ -42,20 +42,18 @@ export class AuthService {
   #authStatus = signal<TAuthStatus>('checking');
   #user = signal<null | TAuthSuccessData['user']>(null);
   #token = signal<string | null>(null);
-  #response = signal<TAuthRespnse | null>(null);
   #showMessage = signal<boolean>(false);
   #userId = signal<Number>(0);
 
   #http = inject(HttpClient);
   #router = inject(Router);
-  #timeoutId: ReturnType<typeof setTimeout> | null = null;
+  #toastService = inject(CustomToastService);
 
   authStatus = computed<TAuthStatus>(() => {
     return this.#authStatus();
   })
   user = computed(() => this.#user());
   token = computed<string | null>(() => this.#token());
-  response = computed<TAuthRespnse | null>(() => this.#response());
   showMessage = computed<boolean>(() => this.#showMessage());
 
   constructor() {
@@ -75,6 +73,7 @@ export class AuthService {
         tap((res) => {
           const { data } = res;
           this.#authStatus.set('2FA');
+          this.#user.set({email,pass});
           this.#userId.set(Number(data?.userId!));
           this.showResponseByToast(res)
         }),
@@ -285,15 +284,8 @@ export class AuthService {
 
 
   showResponseByToast({ msg, data, status }: any) {
-    if (this.#timeoutId) {
-      clearTimeout(this.#timeoutId);
-      this.#timeoutId = null;
-    }
-    this.#response.set({ msg, data, status });
-    this.#showMessage.set(true);
-    this.#timeoutId = setTimeout(() => {
-      this.#showMessage.set(false);
-    }, 4000);
+    this.#toastService.renderToast(msg,status);
+
   }
 
 }

@@ -19,18 +19,18 @@
         <!-- code -->
         <div class="form__campo">
             <label for="code">Código:</label>
-            <input type="text" name="code" id="code" placeholder="1234567890" formControlName="code">
+            <input type="text" name="code" id="code" placeholder="Ej. 123456" formControlName="code">
             <app-error-field [control]="code!" fieldName="código"></app-error-field>
         </div>
 
 
         <!-- Btn -->
          <div class="btns">
-             <div class="form__campo form__campo-2">
-                 <button type="button" (click)="onCancel()">Cancelar</button>
+             <div class="form__campo ">
+                 <button type="button" class="btn-1 btn-2" (click)="onCancel()">Cancelar</button>
              </div>
              <div class="form__campo">
-                 <button type="submit">Guardar</button>
+                 <button class="btn-1" type="submit">Guardar</button>
              </div>
          </div>
     </form>

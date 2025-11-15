@@ -12,10 +12,10 @@
     <!-- Btn -->
     <div class="btns">
         <div class="form__campo">
-            <button type="button" (click)="onCancel()">Cancelar</button>
+            <button type="button" class="btn-1" (click)="onCancel()">Cancelar</button>
         </div>
-        <div class="form__campo form__campo-2">
-            <button type="button" (click)="onSubmit()">Iniciar Sesión</button>
+        <div class="form__campo ">
+            <button type="button" class="btn-1 btn-2" (click)="onSubmit()">Iniciar Sesión</button>
         </div>
     </div>
 </form>
@@ -23,7 +23,7 @@
 @if(authService.authStatus()==='invalid-code'){
 
 <div class="form__campo nw-code">
-    <button type="button" (click)="generateNewCode2FA()">Generar Otro Código</button>
+    <button type="button" class="btn-1 btn-2" (click)="generateNewCode2FA()">Generar Otro Código</button>
 </div>
 
 }

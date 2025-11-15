@@ -2,11 +2,15 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: .8rem;
-}
-
-.box-error {
+    margin-top: .3rem;
+    padding-block: .4rem;
     text-align: left;
     width: 100%;
     font-size: 1.6rem;
+    background-color: var(--red-bg);
+    color: var(--red);
+    font-weight: 600;
+    padding-inline: 1.6rem;
+    border-radius: .5rem;
 }
+

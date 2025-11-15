@@ -15,16 +15,23 @@ export class NavBarComponent {
 
   links = [
     { name: 'Productos', link: '/product/products' },
+    { name: 'Proveedores', link: '/supplier/suppliers' },
+    { name: 'Clientes', link: '/client/clients' },
   ]
   onLogOut() {
     this.#authServide.logOut().subscribe(res=>{
       if(res){
-        this.#router.navigate(['/auth/login'])
+        this.#router.navigate(['/auth/login']);
+        this.closeModal();
       }
     })
   }
 
   onShowMenuModal(){
     this.showMenuModal.update((prev)=>!prev);
+  }
+
+  closeModal(){
+    this.showMenuModal.set(false);
   }
 }

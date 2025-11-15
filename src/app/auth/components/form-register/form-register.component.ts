@@ -34,12 +34,12 @@ export class FormRegisterComponent {
   };
 
   registerForm = this.#fb.group({
-    name: ['test', [Validators.required]],
-    lastN: ['test', [Validators.required]],
-    email: ['test2@email.com', [Validators.required, Validators.email]],
-    pass: ['Pass*123', [Validators.required, Validators.pattern('(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*()+={};:,.<>?~]).{8,}'), Validators.minLength(8),]],
-    confirmPass: ['Pass*123', [Validators.required,]],
-    telf: ['1234567098', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]]
+    name: ['', [Validators.required]],
+    lastN: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email]],
+    pass: ['', [Validators.required, Validators.pattern('(?=.*[A-Z])(?=.*[0-9])(?=.*[-_!@#$%^&*()+={};:,.<>?~]).{8,}'), Validators.minLength(8),]],
+    confirmPass: ['', [Validators.required,]],
+    telf: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]]
   },
     {
       validators: [this.passwordMatchValidator]

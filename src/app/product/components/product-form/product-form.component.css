@@ -1,12 +1,18 @@
-.form__heading {
-    padding-top: 4rem;
-}
-
 .form__capa {
     width: 90%;
     margin: 0 auto;
     border-radius: 1rem;
-    background-color: var(--bg-altern2);
+    background: #fff;
+    min-height: 100%;
+    margin-top: 3rem;
+}
+
+.form__heading {
+    padding-top: 4rem;
+    padding-inline: 4rem;
+    color: var(--primary);
+    font-size: 3.5rem;
+
 }
 
 @media(min-width:768px) {
@@ -19,4 +25,36 @@
         justify-content: center;
         align-items: center;
     }
+    
+}
+
+.form__campo {
+    color: var(--primary);
+
+}
+
+.form__campo input,
+.form__campo button,
+.form__campo select {
+    color: var(--primary);
+
+}
+
+.form__campo input,
+.form__campo select {
+    border-bottom: 1px solid var(--primary);
+
+}
+
+
+.form__campo button {
+    border: 1px solid var(--primary);
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.form__campo button:hover {
+    background-color: var(--secondary);
+    border: 1px solid var(--secondary);
+    color: var(--primary);
 }

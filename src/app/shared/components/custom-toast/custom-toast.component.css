@@ -1,6 +1,6 @@
 .custom-toast {
     opacity: 0;
-    position: absolute;
+    position: fixed;
     top: 2rem;
     right: 2rem;
     padding: 1rem 3rem;
@@ -12,6 +12,12 @@
 @media(min-width:768px) {
     .custom-toast {
         width: 25%;
+    }
+
+    .custom-toast p,
+    .custom-toast h3 {
+        color: var(--primary);
+        word-break: normal;
     }
 }
 
@@ -44,10 +50,10 @@
     opacity: 0;
     transform: translateY(-100%);
     visibility: hidden;
-    transition: 
-    opacity 1s ease-in-out,
-    transform 1s ease-in-out,
-    visibility 1s ease-in-out;
+    transition:
+        opacity 1s ease-in-out,
+        transform 1s ease-in-out,
+        visibility 1s ease-in-out;
 }
 
 .show-toast {

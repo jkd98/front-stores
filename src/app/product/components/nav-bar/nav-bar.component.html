@@ -1,7 +1,7 @@
 <nav class="bar-bg">
     <div class="bar">
-        <div  class="logo-cont">
-            <p  routerLink="/product" class="logo">Inventory<span>Prods</span></p>
+        <div class="logo-cont">
+            <p routerLink="/product" class="logo">Inventory<span>Prods</span></p>
         </div>
         <div class="nav">
             @for (link of links; track $index) {
@@ -17,12 +17,30 @@
                 <p (click)="onLogOut()">Cerrar Sesión</p>
             </div>
         </div>
-        <button type="button" class="burguer" (click)="onShowMenuModal()" >Burger</button>
+        <button type="button" class="burguer" (click)="onShowMenuModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M3.75 5.25h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5m-16.5 4.5h16.5" />
+            </svg>
+        </button>
     </div>
 </nav>
 
 @if(showMenuModal()){
-    <div class="menu-modal">
-        menu modal
+<div class="menu-modal">
+    <div class="mobile-nav">
+        @for (link of links; track $index) {
+        <div class="nav__link">
+            <p [routerLink]="[link.link]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"
+                (click)="closeModal()">
+                {{link.name}}
+            </p>
+        </div>
+        }
+        <div class="nav__link">
+            <p (click)="onLogOut()">Cerrar Sesión</p>
+        </div>
     </div>
+</div>
 }

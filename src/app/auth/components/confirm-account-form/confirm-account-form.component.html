@@ -11,7 +11,7 @@
         <!-- Btn -->
         <div class="btns">
             <div class="form__campo">
-                <button type="button" (click)="onSubmit()">Confirmar Cuenta</button>
+                <button type="button" class="btn-1" (click)="onSubmit()">Confirmar Cuenta</button>
             </div>
         </div>
 
@@ -27,8 +27,8 @@
                 <app-error-field [control]="email!" fieldName="correo"></app-error-field>
             </div>
 
-            <div class="form__campo form__campo-2">
-                <button type="button" (click)="generateNewCode2FA()">Generar Otro Código</button>
+            <div class="form__campo ">
+                <button type="button" class="btn-1 btn-2" (click)="generateNewCode2FA()">Generar Otro Código</button>
             </div>
         </div>
     </form>

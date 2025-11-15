@@ -62,10 +62,13 @@ img {
 
 h2 {
     font-size: 5rem;
-    word-break: break-all;
 }
 
-/*Estilos form*/
+h2 {
+    word-break: break-word;
+}
+
+/***Estilos form***/
 
 /* inicio 
     Esto es para evitar añadir estilos a ng-component y se aplique a todos
@@ -89,13 +92,16 @@ h2 {
     font-size: 5rem;
     text-align: center;
     padding-bottom: 5rem;
+    padding-inline: 4rem;
     width: 100%;
     color: var(--secondary);
+    word-break: break-all;
 }
 
 @media (min-width:768px) {
     .form__heading {
         color: var(--primary);
+        word-break: normal;
     }
 }
 
@@ -127,7 +133,6 @@ h2 {
 }
 
 .form__campo input,
-.form__campo button,
 .form__campo select {
     width: 100%;
     height: 4rem;
@@ -141,7 +146,6 @@ h2 {
 @media(min-width:768px) {
 
     .form__campo input,
-    .form__campo button,
     .form__campo select {
         color: var(--primary);
 
@@ -173,12 +177,14 @@ h2 {
     outline: none;
 }
 
-.form__campo button {
+/**btn1*/
+.btn-1 {
     width: 100%;
     background-color: transparent;
     border: 1px solid var(--secondary);
     font-weight: 700;
-    padding-block: 2rem;
+    font-size: 1.6rem;
+    padding-block: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -186,44 +192,49 @@ h2 {
     transition-property: background;
     transition-duration: 350ms;
     transition-timing-function: ease-in-out;
+    color: var(--secondary);
 }
 
-.form__campo button:hover {
+.btn-1:hover {
     background-color: var(--secondary);
     color: var(--primary);
+    border: 1px solid var(--primary);
+
 }
 
 
 
 @media(min-width:768px) {
-    .form__campo button {
+    .btn-1 {
         border: 1px solid var(--primary);
+        color: var(--primary);
     }
 
-    .form__campo button:hover {
+    .btn-1:hover {
         background-color: var(--primary);
         color: var(--secondary);
     }
 }
 
-
-.form__campo-2 button {
+/**btn2**/
+.btn-2 {
     background-color: var(--secondary);
+    border: 1px solid var(--secondary);
     color: var(--primary);
 }
 
-.form__campo-2 button:hover {
+.btn-2:hover {
     background-color: transparent;
     color: var(--secondary);
 }
 
 @media(min-width:768px) {
-    .form__campo-2 button {
+    .btn-2 {
         background-color: var(--primary);
         color: var(--secondary);
     }
 
-    .form__campo-2 button:hover {
+    .btn-2:hover {
         background-color: var(--secondary);
         color: var(--primary);
     }
@@ -234,6 +245,8 @@ h2 {
         display: flex;
     }
 }
+
+/**Fin-btns**/
 
 ng-component {
     width: 100%;
