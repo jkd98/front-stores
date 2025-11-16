@@ -17,14 +17,16 @@
     .custom-toast p,
     .custom-toast h3 {
         color: var(--primary);
-        word-break: normal;
+        word-wrap: break-word;
+
     }
 }
 
 .custom-toast p,
 .custom-toast h3 {
     color: var(--primary);
-    word-break: break-all;
+    word-wrap: break-word;
+
 }
 
 

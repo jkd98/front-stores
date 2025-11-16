@@ -18,7 +18,7 @@ export const routes: Routes = [
         loadChildren: () => import('./supplier/supplier.routes'),
         canActivate: [isAuthGuard],
     },
-    {
+    /* {
         path: 'client',
         loadChildren: () => import('./client/client.routes'),
         canActivate: [isAuthGuard],
@@ -27,7 +27,7 @@ export const routes: Routes = [
         path: 'movement',
         loadChildren: () => import('./movement/movement.routes'),
         canActivate: [isAuthGuard],
-    },
+    }, */
     {
         path: '**',
         redirectTo: '/product',

@@ -65,7 +65,15 @@ h2 {
 }
 
 h2 {
-    word-break: break-word;
+    word-wrap: break-word;
+}
+
+@media (width<340px) {
+
+    h2,
+    p {
+        word-break: break-all;
+    }
 }
 
 /***Estilos form***/
@@ -95,7 +103,6 @@ h2 {
     padding-inline: 4rem;
     width: 100%;
     color: var(--secondary);
-    word-break: break-all;
 }
 
 @media (min-width:768px) {
