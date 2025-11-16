@@ -1,0 +1,43 @@
+<div class="form__capa">
+    @if (code) {
+    <h2 class="form__heading">Editar Cliente</h2>
+    }@else {
+    <h2 class="form__heading">Registra un Nuevo Cliente</h2>
+    }
+    <form class="form" [formGroup]="myForm">
+        <!-- Nombre -->
+        <div class="form__campo">
+            <label for="nombre">Nombre:</label>
+            <input type="text" name="nombre" id="nombre" placeholder="Nombre del cliente" formControlName="nombre">
+            <app-error-field [control]="getFormControl('nombre')!" fieldName="nombre"></app-error-field>
+        </div>
+
+        <!-- Telf -->
+        <div class="form__campo">
+            <label for="telf">Teléfono:</label>
+            <input type="text" name="telf" id="telf" placeholder="Ej. 1234567879" formControlName="telf">
+            <app-error-field [control]="getFormControl('telf')!" fieldName="teléfono"></app-error-field>
+        </div>
+
+        <!-- Contact -->
+        <div class="form__campo">
+            <label for="contacto">Contacto:</label>
+            <input type="email" name="contacto" id="contacto" placeholder="Ej. example@email.com" formControlName="contacto">
+            <app-error-field [control]="getFormControl('contacto')!" fieldName="contacto"></app-error-field>
+        </div>
+
+        @if(code){
+        <!-- Btn -->
+        <div class="form__campo">
+            <button type="button" class="btn-1 btn-2" (click)="onEdit()">Guardar</button>
+        </div>
+        }@else {
+        <!-- Btn -->
+        <div class="form__campo">
+            <button type="button" class="btn-1 btn-2" (click)="onSubmit()">Registrar</button>
+        </div>
+        }
+
+
+    </form>
+</div>
