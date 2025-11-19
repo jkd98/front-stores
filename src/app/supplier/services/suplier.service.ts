@@ -6,7 +6,7 @@ import { CustomToastService } from '../../shared/services/custom-toast.service';
 
 
 
-type Proveedor = {
+export type Proveedor = {
   showMenu?: boolean;
   id_proveedor: number;
   nombre: string;

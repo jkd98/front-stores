@@ -3,6 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/services/auth.service';
 import { catchError, map, of, tap } from 'rxjs';
+import { Proveedor } from '../../supplier/services/suplier.service';
 
 const baseUrl = environment.baseUrl;
 
@@ -10,6 +11,7 @@ export type TProductRespnse = {
   data: Product[] | null;
   msg: string;
   status: string;
+  metadata?:Metadata
 }
 
 export type Product = {
@@ -23,7 +25,17 @@ export type Product = {
   unidad: string;
   stock_minimo: number;
   id_proveedor?: number;
-  showMenu?: boolean
+  showMenu?: boolean;
+  proveedor?:Proveedor
+}
+
+type Metadata = {
+  totalItems: number;
+  totalPages: number;
+  currentPage: number;
+  hasNextPage: number;
+  hasPrevPage:number;
+  limit:number;
 }
 
 @Injectable({
@@ -34,9 +46,11 @@ export class ProductService {
   #authService = inject(AuthService);
   #products = signal<Product[] | null>([]);
   #product = signal<Product | null>(null);
+  #metadata = signal< Metadata | null>(null);
 
   products = computed(() => this.#products());
   product = computed(() => this.#product());
+  metadata = computed(()=>this.#metadata());
 
   private headers = {
     Authorization: `Bearer ${this.#authService.token()}`
@@ -128,10 +142,37 @@ export class ProductService {
 
   onShowMenu(product: Product) {
     this.products()!.forEach(p => {
-      if(p!==product){
+      if (p !== product) {
         p.showMenu = false
       }
     });
     product.showMenu = !product.showMenu;
+  }
+
+  filterProducts(filters: { nombre?: string, categoria?: string, proveedor?: string, page?:string|number,limit?:string }) {
+    console.log(filters)
+    let query = '';
+    if(filters.page && filters.limit !== ''){
+      query= `?page=${Number(filters.page)}&limit=${Number(filters.limit)}`;
+    }else if(filters.page){
+      query=`?page=${Number(filters.page)}`;
+    }else if(filters.limit !== ''){
+      query=`?limit=${Number(filters.limit)}`;
+    }
+
+
+    return this.#http.post<TProductRespnse>(`${baseUrl}/product/filter${query}`, filters, { headers: this.headers })
+      .pipe(
+        tap((res) => {
+          console.log(res);
+          this.#products.set(res.data);
+          this.#metadata.set(res.metadata!)
+        }),
+        map(() => true),
+        catchError((error) => {
+          console.log(error.error);
+          return of(false)
+        })
+      );
   }
 }

@@ -14,6 +14,62 @@
     justify-content: center;
 }
 
+.form__campo {
+    color: var(--primary);
+
+}
+
+.form__campo input,
+.form__campo select {
+    color: var(--primary);
+
+}
+
+.form__campo input,
+.form__campo select {
+    border-bottom: 1px solid var(--primary);
+
+}
+
+
+.filters {
+    margin-top: 4rem;
+    grid-column: 1/3;
+}
+
+.btn-1.btn-2 {
+    margin-top: 2rem;
+    border: 1px solid var(--primary);
+}
+
+.btn-1.btn-2:hover {
+    background-color: var(--primary);
+
+}
+
+
+
+.form {
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: center;
+    column-gap: 4rem;
+}
+
+@media(min-width:768px) {
+    .form {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr .5fr;
+        align-items: center;
+        column-gap: 4rem;
+    }
+
+    .btn-1.btn-2:hover {
+        background-color: var(--secondary);
+
+    }
+}
+
 
 
 .product-heading .form__campo {
@@ -32,7 +88,8 @@
 
 
 /**Para desktop***/
-.form__campo{
+
+#nwP {
     display: none;
 }
 
@@ -51,7 +108,8 @@
     .table-grid {
         display: grid;
     }
-    .form__campo {
+
+    #nwP {
         display: block;
     }
 }
@@ -79,7 +137,7 @@
 
 .table-hd p,
 .table-dt p {
-    word-break: break-all;
+    word-wrap: break-word;
 }
 
 .table-actions {
@@ -111,12 +169,58 @@ svg {
     color: var(--green);
 }
 
+.pagination {
+    padding-top: 1rem;
+    grid-column: 1/9;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.pagination button,
+.pagination select {
+    background-color: transparent;
+    color: var(--primary);
+    padding: 1.5rem 2rem;
+    font-size: 2rem;
+    font-weight: 700;
+    border: none;
+}
+
+.pagination button {
+    border-radius: 3rem;
+}
+
+.pagination button:hover {
+    cursor: pointer;
+    background-color: var(--primary);
+    color: var(--secondary);
+}
+
+.pagination button.current {
+    background-color: var(--primary);
+    color: var(--secondary);
+
+}
+
+.pages {
+    display: none;
+}
+
+@media (min-width:768px) {
+    .pages {
+        display: flex;
+    }
+}
+
 /**Para movil y tablet **/
 
+
 .btn-add {
-    position: absolute;
-    bottom: 5%;
-    right: 5%;
+    position: fixed;
+    bottom: 2%;
+    right: 2%;
     background-color: var(--primary);
     border: none;
     border-radius: 3rem;
@@ -156,6 +260,9 @@ svg {
     align-items: center;
 }
 
+.data .first-data{
+    padding-bottom: 1rem;
+}
 
 .item span {
     font-weight: 800;
@@ -176,7 +283,7 @@ svg {
     width: 100%;
 }
 
-.more:hover{
+.more:hover {
     cursor: pointer;
 }
 
@@ -190,7 +297,7 @@ svg {
     width: 15rem;
 }
 
-.card-actions svg{
+.card-actions svg {
     width: 2rem;
 }
 
@@ -219,6 +326,10 @@ svg {
     align-items: center;
 }
 
+.third-data {
+    gap:3rem;
+}
+
 @media (width<338px) {
 
     .first-data,
@@ -228,4 +339,3 @@ svg {
     }
 
 }
-

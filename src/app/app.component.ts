@@ -11,6 +11,7 @@ import { CustomToastComponent } from './shared/components/custom-toast/custom-to
 })
 export class AppComponent {
   authService = inject(AuthService);
+  
   @HostListener('window:beforeunload', ['$event'])
   async beforeUnloadHandler(event:Event){
     if(this.authService.token()){
