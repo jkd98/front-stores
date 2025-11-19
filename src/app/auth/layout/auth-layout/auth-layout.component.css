@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: center;
     min-height: 100dvh;
+    align-items: stretch;
 }
 
 @media(min-width:768px) {
