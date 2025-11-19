@@ -3,6 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, map, of, tap } from 'rxjs';
 import { CustomToastService } from '../../shared/services/custom-toast.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 
 
@@ -28,11 +29,15 @@ export class SuplierService {
   proveedores = computed(() => this.#proveedores());
   proveedor = computed(() => this.#proveedor());
 
-  constructor() { }
   #http = inject(HttpClient)
-
+    #authService = inject(AuthService); 
+  private headers = {
+    Authorization: `Bearer ${this.#authService.token()}`
+  };
+  
+  constructor() { }
   getSuppliers() {
-    return this.#http.get<{ status: string; msg: string; data: Proveedor[]; }>(`${baseUrl}/proveedor/`)
+    return this.#http.get<{ status: string; msg: string; data: Proveedor[]; }>(`${baseUrl}/proveedor/`,{ headers: this.headers })
       .pipe(
         tap(res => { //Para manejar estados, actualizacion de variables, cuando res = 200 ok
           this.#proveedores.set(res.data)
@@ -48,7 +53,7 @@ export class SuplierService {
   }
 
   addSupplier(data: { nombre: string; telf: string; contacto: string }) {
-    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/`, data)
+    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/`, data,{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);
@@ -63,7 +68,7 @@ export class SuplierService {
   }
 
   getOneSupplier(id_proveedor: Proveedor['id_proveedor']) {
-    return this.#http.post<{ status: string; msg: string; data: Proveedor }>(`${baseUrl}/proveedor/one`, { id_proveedor })
+    return this.#http.post<{ status: string; msg: string; data: Proveedor }>(`${baseUrl}/proveedor/one`, { id_proveedor },{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#proveedor.set(res.data);
@@ -79,7 +84,7 @@ export class SuplierService {
   }
 
   editSupplier(data: { id_proveedor: string, nombre: string; telf: string; contacto: string }) {
-    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/edit`, data)
+    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/edit`, data,{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);
@@ -94,7 +99,7 @@ export class SuplierService {
   }
 
   deleteSupplier(contacto: Proveedor['contacto']) {
-    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/delete`, { contacto })
+    return this.#http.post<{ status: string; msg: string }>(`${baseUrl}/proveedor/delete`, { contacto },{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);

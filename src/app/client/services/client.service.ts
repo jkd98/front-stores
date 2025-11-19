@@ -3,6 +3,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { catchError, map, of, tap } from 'rxjs';
 import { CustomToastService } from '../../shared/services/custom-toast.service';
+import { AuthService } from '../../auth/services/auth.service';
 
 type Client = {
   showMenu?: boolean;
@@ -24,9 +25,12 @@ export class ClientService {
 
   #http = inject(HttpClient);
   #toast = inject(CustomToastService);
-
+  #authService = inject(AuthService);
+  private headers = {
+    Authorization: `Bearer ${this.#authService.token()}`
+  };
   getClients() {
-    return this.#http.get<{ status: string, msg: string, data: Client[] }>(`${this.#baseUrl}/cliente/`)
+    return this.#http.get<{ status: string, msg: string, data: Client[] }>(`${this.#baseUrl}/cliente/`,{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#clients.set(res.data);
@@ -40,7 +44,7 @@ export class ClientService {
   }
 
   getClientById(id_cliente: Client['id_cliente']) {
-    return this.#http.post<{ status: string, msg: string, data: Client }>(`${this.#baseUrl}/cliente/one`, { id_cliente })
+    return this.#http.post<{ status: string, msg: string, data: Client }>(`${this.#baseUrl}/cliente/one`, { id_cliente },{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#client.set(res.data);
@@ -55,7 +59,7 @@ export class ClientService {
   }
 
   addClient(data: { nombre: string; telf: string; contacto: string }) {
-    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/`, data)
+    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/`, data,{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);
@@ -69,7 +73,7 @@ export class ClientService {
   }
 
   editClient(data: { id_cliente: string, nombre: string; telf: string; contacto: string }) {
-    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/edit`, data)
+    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/edit`, data,{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);
@@ -83,7 +87,7 @@ export class ClientService {
   }
 
   deleteClient(contacto: Client['contacto']) {
-    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/delete`, { contacto })
+    return this.#http.post<{ status: string, msg: string }>(`${this.#baseUrl}/cliente/delete`, { contacto },{ headers: this.headers })
       .pipe(
         tap(res => {
           this.#toast.renderToast(res.msg, res.status);
