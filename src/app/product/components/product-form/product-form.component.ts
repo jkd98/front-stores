@@ -3,6 +3,7 @@ import { ErrorFieldComponent } from '../../../auth/components/error-field/error-
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Product, ProductService } from '../../services/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { SuplierService } from '../../../supplier/services/suplier.service';
 
 @Component({
   selector: 'app-product-form',
@@ -35,15 +36,17 @@ export class ProductFormComponent implements OnInit {
     'Electrodomesticos',
     'Electrónica'
   ]
+  suppliers = inject(SuplierService);
 
   ngOnInit(): void {
+    this.suppliers.getSuppliers().subscribe();
     this.newProductForm = this.#fb.group({
-      nombre: ['Producto', [Validators.required]],
-      descrip: ['Este es un nuevo producto', [Validators.required]],
+      nombre: ['', [Validators.required]],
+      descrip: ['', [Validators.required]],
       categoria: ['', [Validators.required]],
       unidad: ['', [Validators.required]],
       stock_minimo: ['', [Validators.required, Validators.min(10), Validators.max(1000)]],
-      id_proveedor: ['2', [Validators.required]],
+      id_proveedor: ['', [Validators.required]],
     });
     this.#route.paramMap.subscribe(params => {
       this.code = params.get('code') || '';

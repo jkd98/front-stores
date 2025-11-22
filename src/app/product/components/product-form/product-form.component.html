@@ -25,16 +25,16 @@
         <div class="">
             <!-- Categoría -->
             <div class="form__campo">
-                <label for="categoria">Categoría:</label>
-                <select name="categoria" id="categoria" formControlName="categoria">
+                <label for="id_proveedor">Categoría:</label>
+                <select name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
                     <option selection value="" [defaultSelected]="true">--Seleccionar Categoría--</option>
                     @for (item of categories; track $index) {
                     <option selection [value]="item">{{item}}</option>
                     }
                 </select>
-                <app-error-field [control]="getFormControl('categoria')!" fieldName="categoría"></app-error-field>
+                <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="categoría"></app-error-field>
             </div>
-    
+
             <!-- Unidad -->
             <div class="form__campo">
                 <label for="unidad">Unidad de Medida:</label>
@@ -49,23 +49,28 @@
         </div>
 
         <!-- Stock minimo -->
-         <div class="">
-             <div class="form__campo">
-                 <label for="stock_minimo">Stock Mínimo:</label>
-                 <input type="text" name="stock_minimo" id="stock_minimo" placeholder="Ej. 10"
-                     formControlName="stock_minimo">
-                 <app-error-field [control]="getFormControl('stock_minimo')!" fieldName="stock mínimo"></app-error-field>
-             </div>
-     
-             @if(!code){
-             <!-- proveedor -->
-             <div class="form__campo">
-                 <label for="telf">Proveedor:</label>
-                 <input type="text" name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
-                 <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="proveedor"></app-error-field>
-             </div>
-             }
-         </div>
+        <div class="">
+            <div class="form__campo">
+                <label for="stock_minimo">Stock Mínimo:</label>
+                <input type="text" name="stock_minimo" id="stock_minimo" placeholder="Ej. 10"
+                    formControlName="stock_minimo">
+                <app-error-field [control]="getFormControl('stock_minimo')!" fieldName="stock mínimo"></app-error-field>
+            </div>
+
+            @if(!code){
+            <!-- proveedor -->
+            <div class="form__campo">
+                <label for="id_proveedor">Categoría:</label>
+                <select name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
+                    <option selection value="" [defaultSelected]="true">--Seleccionar Categoría--</option>
+                    @for (item of suppliers.proveedores(); track $index) {
+                    <option selection [value]="item.id_proveedor">{{item.nombre}}</option>
+                    }
+                </select>
+                <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="proveedor"></app-error-field>
+            </div>
+            }
+        </div>
 
         @if(code){
         <!-- Btn -->
