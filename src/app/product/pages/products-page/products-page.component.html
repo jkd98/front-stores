@@ -219,16 +219,15 @@
         }
     </div>
     <div class="pagination">
-        <button (click)="backPage()" [disabled]="!productService.metadata()?.hasPrevPage">
+        <button (click)="backPage()" [disabled]="!productService.metadata()!.hasPrevPage">
         </button>
         <div class="pages">
-
             @for (item of arrPages(); track $index) {
             <button [ngClass]="{'current':currentPage().toString()===item.toString()}" (click)="onFilter(item)"
                 [id]="$index">{{item.toString()}}</button>
             }
         </div>
-        <button (click)="prevPage()" [disabled]="!productService.metadata()?.hasNextPage">></button>
+        <button (click)="prevPage()" [disabled]="!productService.metadata()!.hasNextPage">></button>
         <select name="quantity" id="quantity" [formControl]="limit" (change)="onFilter()">
             @for (item of quantity; track $index) {
             <option [value]="item">{{item}}</option>

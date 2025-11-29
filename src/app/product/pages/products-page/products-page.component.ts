@@ -59,7 +59,10 @@ export class ProductsPageComponent implements OnInit {
 
   ngOnInit(): void {
     //this.productService.getAllProducts().subscribe(r => console.log(r));
-    this.onFilter();
+    //this.onFilter();
+    this.pages.set(this.productService.metadata()?.totalPages || 0);
+    this.currentPage.set(this.productService.metadata()?.currentPage||0)
+    this.limit.setValue(this.productService.metadata()?.limit.toString()||'1')
     this.supplierService.getSuppliers().subscribe();
   }
 
@@ -112,23 +115,23 @@ export class ProductsPageComponent implements OnInit {
   onReport() {
     this.#movsService.generateReport().subscribe(blob => {
       if (blob) {
-      // 1. Crear un objeto URL a partir del Blob
-      const url = window.URL.createObjectURL(blob);
-      
-      // 2. Crear un enlace temporal para forzar la descarga
-      const a = document.createElement('a');
-      a.href = url;
-      // Usar el nombre que te da el servidor o uno genérico
-      a.download = `reporte_movimientos_${new Date().toISOString()}.xlsx`; 
-      document.body.appendChild(a);
-      
-      // 3. Simular el click para descargar
-      a.click();
-      
-      // 4. Limpiar
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-    }
+        // 1. Crear un objeto URL a partir del Blob
+        const url = window.URL.createObjectURL(blob);
+
+        // 2. Crear un enlace temporal para forzar la descarga
+        const a = document.createElement('a');
+        a.href = url;
+        // Usar el nombre que te da el servidor o uno genérico
+        a.download = `reporte_movimientos_${new Date().toISOString()}.xlsx`;
+        document.body.appendChild(a);
+
+        // 3. Simular el click para descargar
+        a.click();
+
+        // 4. Limpiar
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      }
     });
   }
 
