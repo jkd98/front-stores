@@ -1,0 +1,62 @@
+<div class="form__capa">
+    <h2 class="form__heading">Registra Movimiento</h2>
+    <form class="form" [formGroup]="myForm">
+
+        <div class="form__campo">
+            <label for="tipo">Tipo de movimiento:</label>
+            <select name="tipo" id="tipo" formControlName="tipo">
+                <option selection value="" [defaultSelected]="true">--Seleccionar Tipo--</option>
+                @for (item of movementsTipo; track $index) {
+                <option selection [value]="item">{{item}}</option>
+                }
+            </select>
+            <app-error-field [control]="getFormControl('tipo')!" fieldName="tipo"></app-error-field>
+        </div>
+
+        <div class="form__campo">
+            <label for="codigo">Código de Producto:</label>
+            <input type="text" name="codigo" id="codigo" placeholder="Ej. 1234567890" formControlName="codigo">
+            <app-error-field [control]="getFormControl('codigo')!" fieldName="código"></app-error-field>
+        </div>
+
+        <div class="form__campo">
+            <label for="cantidad">Cantidad:</label>
+            <input type="number" name="cantidad" id="cantidad" placeholder="Ej. 50" formControlName="cantidad">
+            <app-error-field [control]="getFormControl('cantidad')!" fieldName="cantidad"></app-error-field>
+        </div>
+
+        @if (productService.tipo() == 'entrada') {
+            <pre>{{getFormControl('responsable')?.value}}</pre>
+        <div class="form__campo">
+            <label for="responsable">Responsable del movimiento:</label>
+            <select name="responsable" id="responsable" formControlName="responsable">
+                <option selection value="" [defaultSelected]="true">--Seleccionar responsable--</option>
+                @for (item of supliersServ.proveedores(); track $index) {
+                <option selection [value]="item.id_proveedor">{{item.nombre}}</option>
+                }
+            </select>
+            <app-error-field [control]="getFormControl('responsable')!" fieldName="responsable"></app-error-field>
+        </div>
+        }
+
+        @if (productService.tipo() == 'salida') {
+            <pre>{{getFormControl('responsable')?.value}}</pre>
+        <div class="form__campo">
+            <label for="responsable">Responsable del movimiento:</label>
+            <select name="responsable" id="responsable" formControlName="responsable">
+                <option selection value="" [defaultSelected]="true">--Seleccionar responsable--</option>
+                @for (item of clientServ.clients(); track $index) {
+                <option selection [value]="item.id_cliente">{{item.nombre}}</option>
+                }
+            </select>
+            <app-error-field [control]="getFormControl('responsable')!" fieldName="responsable"></app-error-field>
+        </div>
+        }
+
+        <div class="form__campo">
+            <button type="button" class="btn-1 btn-2" (click)="onSubmit()">Registrar</button>
+        </div>
+
+
+    </form>
+</div>

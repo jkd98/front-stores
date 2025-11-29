@@ -25,14 +25,14 @@
         <div class="">
             <!-- Categoría -->
             <div class="form__campo">
-                <label for="id_proveedor">Categoría:</label>
-                <select name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
+                <label for="categoria">Categoría:</label>
+                <select name="categoria" id="categoria" formControlName="categoria">
                     <option selection value="" [defaultSelected]="true">--Seleccionar Categoría--</option>
                     @for (item of categories; track $index) {
                     <option selection [value]="item">{{item}}</option>
                     }
                 </select>
-                <app-error-field [control]="getFormControl('id_proveedor')!" fieldName="categoría"></app-error-field>
+                <app-error-field [control]="getFormControl('categoria')!" fieldName="categoría"></app-error-field>
             </div>
 
             <!-- Unidad -->
@@ -60,9 +60,9 @@
             @if(!code){
             <!-- proveedor -->
             <div class="form__campo">
-                <label for="id_proveedor">Categoría:</label>
+                <label for="id_proveedor">Poveedor:</label>
                 <select name="id_proveedor" id="id_proveedor" formControlName="id_proveedor">
-                    <option selection value="" [defaultSelected]="true">--Seleccionar Categoría--</option>
+                    <option selection value="" [defaultSelected]="true">--Seleccionar Proveedor--</option>
                     @for (item of suppliers.proveedores(); track $index) {
                     <option selection [value]="item.id_proveedor">{{item.nombre}}</option>
                     }

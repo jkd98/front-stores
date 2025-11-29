@@ -39,7 +39,9 @@ export class ProductFormComponent implements OnInit {
   suppliers = inject(SuplierService);
 
   ngOnInit(): void {
+
     this.suppliers.getSuppliers().subscribe();
+    
     this.newProductForm = this.#fb.group({
       nombre: ['', [Validators.required]],
       descrip: ['', [Validators.required]],
@@ -62,6 +64,7 @@ export class ProductFormComponent implements OnInit {
               categoria: product?.categoria,
               unidad: product?.unidad,
               stock_minimo: product?.stock_minimo,
+              id_proveedor: product?.id_proveedor,
             })
           }
         })
@@ -75,11 +78,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   onSubmit() {
+    console.log(this.newProductForm.value);
     if (this.newProductForm.invalid) {
       this.newProductForm.markAllAsTouched();
       return;
     }
-    //console.log(this.newProductForm.value)
+    console.log(this.newProductForm.value)
     this.#productService.registerNewProduct({
       nombre: this.newProductForm.get('nombre')?.value!,
       descrip: this.newProductForm.get('descrip')?.value!,
@@ -95,11 +99,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   onEdit() {
+    console.log(this.newProductForm.value)
     if (this.newProductForm.invalid) {
       this.newProductForm.markAllAsTouched();
       return;
     }
-    //console.log(this.newProductForm.value)
+
     this.#productService.editProduct({
       codigo:this.code,
       nombre: this.newProductForm.get('nombre')?.value!,

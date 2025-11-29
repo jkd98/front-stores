@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { SuplierService } from '../../../supplier/services/suplier.service';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { NgClass } from '@angular/common';
+import { MovementService } from '../../../movement/services/movement.service';
 
 @Component({
   imports: [ReactiveFormsModule, NgClass],
@@ -17,7 +18,8 @@ export class ProductsPageComponent implements OnInit {
   showMenu = false
   #fb = inject(FormBuilder);
   pages = signal<number>(0);
-  currentPage = signal(0)
+  currentPage = signal(0);
+  #movsService = inject(MovementService);
 
   categories = [
     'Alimentos',
@@ -57,6 +59,7 @@ export class ProductsPageComponent implements OnInit {
 
   ngOnInit(): void {
     //this.productService.getAllProducts().subscribe(r => console.log(r));
+    this.onFilter();
     this.supplierService.getSuppliers().subscribe();
   }
 
@@ -72,7 +75,7 @@ export class ProductsPageComponent implements OnInit {
         this.pages.set(this.productService.metadata()?.totalPages!);
         this.currentPage.set(this.productService.metadata()?.currentPage!)
         this.limit.setValue(this.productService.metadata()?.limit.toString()!)
-        
+
       }
 
     })
@@ -83,6 +86,11 @@ export class ProductsPageComponent implements OnInit {
   }
 
   onEdit(url: string, code?: string) {
+    this.#router.navigate([url, code])
+  }
+
+  onEntry(url: string, code?: string, tipo?: string) {
+    this.productService.tipo.set(tipo!);
     this.#router.navigate([url, code])
   }
 
@@ -98,6 +106,30 @@ export class ProductsPageComponent implements OnInit {
   backPage() {
     this.currentPage.update(v => v - 1);
     this.onFilter(this.currentPage())
+  }
+
+  // En tu MovementListComponent
+  onReport() {
+    this.#movsService.generateReport().subscribe(blob => {
+      if (blob) {
+      // 1. Crear un objeto URL a partir del Blob
+      const url = window.URL.createObjectURL(blob);
+      
+      // 2. Crear un enlace temporal para forzar la descarga
+      const a = document.createElement('a');
+      a.href = url;
+      // Usar el nombre que te da el servidor o uno genérico
+      a.download = `reporte_movimientos_${new Date().toISOString()}.xlsx`; 
+      document.body.appendChild(a);
+      
+      // 3. Simular el click para descargar
+      a.click();
+      
+      // 4. Limpiar
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    }
+    });
   }
 
 }

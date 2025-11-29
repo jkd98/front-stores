@@ -11,7 +11,7 @@ export type TProductRespnse = {
   data: Product[] | null;
   msg: string;
   status: string;
-  metadata?:Metadata
+  metadata?: Metadata
 }
 
 export type Product = {
@@ -26,7 +26,7 @@ export type Product = {
   stock_minimo: number;
   id_proveedor?: number;
   showMenu?: boolean;
-  proveedor?:Proveedor
+  proveedor?: Proveedor
 }
 
 type Metadata = {
@@ -34,8 +34,8 @@ type Metadata = {
   totalPages: number;
   currentPage: number;
   hasNextPage: number;
-  hasPrevPage:number;
-  limit:number;
+  hasPrevPage: number;
+  limit: number;
 }
 
 @Injectable({
@@ -46,11 +46,12 @@ export class ProductService {
   #authService = inject(AuthService);
   #products = signal<Product[] | null>([]);
   #product = signal<Product | null>(null);
-  #metadata = signal< Metadata | null>(null);
+  #metadata = signal<Metadata | null>(null);
+  tipo = signal('ninguna')
 
-  products = computed(() => this.#products());
+  products = computed(() => { console.log(this.metadata()); return this.#products() });
   product = computed(() => this.#product());
-  metadata = computed(()=>this.#metadata());
+  metadata = computed(() => this.#metadata());
 
   private headers = {
     Authorization: `Bearer ${this.#authService.token()}`
@@ -149,15 +150,15 @@ export class ProductService {
     product.showMenu = !product.showMenu;
   }
 
-  filterProducts(filters: { nombre?: string, categoria?: string, proveedor?: string, page?:string|number,limit?:string }) {
+  filterProducts(filters: { nombre?: string, categoria?: string, proveedor?: string, page?: string | number, limit?: string }) {
     console.log(filters)
     let query = '';
-    if(filters.page && filters.limit !== ''){
-      query= `?page=${Number(filters.page)}&limit=${Number(filters.limit)}`;
-    }else if(filters.page){
-      query=`?page=${Number(filters.page)}`;
-    }else if(filters.limit !== ''){
-      query=`?limit=${Number(filters.limit)}`;
+    if (filters.page && filters.limit !== '') {
+      query = `?page=${Number(filters.page)}&limit=${Number(filters.limit)}`;
+    } else if (filters.page) {
+      query = `?page=${Number(filters.page)}`;
+    } else if (filters.limit !== '') {
+      query = `?limit=${Number(filters.limit)}`;
     }
 
 
@@ -167,6 +168,7 @@ export class ProductService {
           console.log(res);
           this.#products.set(res.data);
           this.#metadata.set(res.metadata!)
+          console.log(this.#metadata());
         }),
         map(() => true),
         catchError((error) => {

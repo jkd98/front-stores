@@ -96,7 +96,7 @@
 .table-grid {
     margin-top: 4rem;
     display: none;
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(9, 1fr);
     border-bottom: none;
     /* background-color: var(--bg-altern2); */
     border-radius: 1rem 1rem 0rem 0rem;
@@ -167,6 +167,11 @@ svg {
 
 .table-actions .edit {
     color: var(--green);
+}
+
+.table-actions .add,
+.table-actions .sell {
+    color: var(--primary);
 }
 
 .pagination {
