@@ -150,7 +150,7 @@ export class ProductService {
     product.showMenu = !product.showMenu;
   }
 
-  filterProducts(filters: { nombre?: string, categoria?: string, proveedor?: string, page?: string | number, limit?: string }) {
+  filterProducts(filters: { nombre?: string, categoria?: string, proveedor?: string, page?: string | number | null, limit?: string | null }) {
     console.log(filters)
     let query = '';
     if (filters.page && filters.limit !== '') {

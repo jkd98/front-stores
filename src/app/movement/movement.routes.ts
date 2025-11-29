@@ -11,11 +11,6 @@ export const movementRoutes:Routes = [
                 loadComponent: ()=> import('./pages/movements-page/movements-page.component').then(m=>m.MovementsPageComponent)
             },
             {
-                path:'new-output/:code',
-                title: 'Agregar Salida',
-                loadComponent: ()=> import('./pages/movements-page/movements-page.component').then(m=>m.MovementsPageComponent)
-            },
-            {
                 path:'**',
                 redirectTo:'movements',
                 pathMatch:'full'

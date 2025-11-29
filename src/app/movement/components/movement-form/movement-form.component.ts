@@ -32,14 +32,13 @@ export class MovementFormComponent implements OnInit {
 
     this.myForm = this.fb.group({
       tipo: ['', [Validators.required]],
-      codigo: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(10), Validators.pattern('^[0-9]*$')]],
       cantidad: ['', [Validators.required, Validators.min(1), Validators.max(1000)]],
       responsable: ['', [Validators.required]]
     });
 
     this.#route.paramMap.subscribe(p => {
       this.code = p.get('code');
-      this.myForm.patchValue({ codigo: this.code });
+      this.productService.getProductByCode(this.code!).subscribe();
       this.myForm.patchValue({ tipo: this.productService.tipo() });
       if(this.productService.tipo() === 'ninguna'){
         this.#router.navigate(['/product/products']);
@@ -59,7 +58,7 @@ export class MovementFormComponent implements OnInit {
 
     const data = {
       tipo: this.myForm.get('tipo')?.value!,
-      codigo: this.myForm.get('codigo')?.value!,
+      codigo: this.code!,
       cantidad: this.myForm.get('cantidad')?.value!,
       responsable: this.myForm.get('responsable')?.value!
     }
@@ -67,6 +66,7 @@ export class MovementFormComponent implements OnInit {
 
     this.movementService.registerNewMovement(data).subscribe(r=>{
       if(r){
+        this.productService.filterProducts({nombre:this.productService.product()?.nombre,limit:'1'}).subscribe();
         this.#router.navigate(['/product/products']);
       }
     })

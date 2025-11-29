@@ -14,12 +14,6 @@
         </div>
 
         <div class="form__campo">
-            <label for="codigo">Código de Producto:</label>
-            <input type="text" name="codigo" id="codigo" placeholder="Ej. 1234567890" formControlName="codigo">
-            <app-error-field [control]="getFormControl('codigo')!" fieldName="código"></app-error-field>
-        </div>
-
-        <div class="form__campo">
             <label for="cantidad">Cantidad:</label>
             <input type="number" name="cantidad" id="cantidad" placeholder="Ej. 50" formControlName="cantidad">
             <app-error-field [control]="getFormControl('cantidad')!" fieldName="cantidad"></app-error-field>
